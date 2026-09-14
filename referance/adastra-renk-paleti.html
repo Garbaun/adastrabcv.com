@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adastra BCV - Renk Paleti ve UI Test Laboratuvarı</title>
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      /* Ana Zemin & Metin */
+      --bg-base: #F4F8FA; /* Buz Beyazı */
+      --bg-card: #FFFFFF;
+      --text-dark: #2B263B; /* Derin Gece Moru */
+      --text-muted: #656078;
+      
+      /* Temel Pastel Tonlar */
+      --ice-white: #F4F8FA;
+      --baby-blue: #B8E1F2;
+      --pastel-lila: #D8C4F8;
+      --pastel-violet: #9E86E3;
+      --pastel-pink: #F8C4D8;
+      --pastel-mint: #BCEAD5;
+
+      /* UI Detayları */
+      --border-color: #E2E8F0;
+      --shadow-sm: 0 2px 8px rgba(43, 38, 59, 0.04);
+      --shadow-md: 0 8px 24px rgba(43, 38, 59, 0.08);
+      --radius-lg: 16px;
+      --radius-sm: 8px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', Arial, sans-serif;
+      background-color: var(--bg-base);
+      color: var(--text-dark);
+      line-height: 1.6;
+      padding: 40px 20px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* Header */
+    header {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      letter-spacing: -1px;
+      margin-bottom: 10px;
+      color: var(--text-dark);
+    }
+
+    header h1 span {
+      background: linear-gradient(135deg, var(--pastel-violet), var(--pastel-lila));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    header p {
+      font-size: 1.1rem;
+      color: var(--text-muted);
+    }
+
+    /* Card Wrapper */
+    .card {
+      background-color: var(--bg-card);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      margin-bottom: 40px;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid rgba(226, 232, 240, 0.8);
+    }
+
+    .card-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .card-title span {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background-color: var(--pastel-violet);
+    }
+
+    /* Color Swatches Grid */
+    .color-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 20px;
+    }
+
+    .swatch {
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      border: 1px solid var(--border-color);
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .swatch:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .swatch-color {
+      height: 100px;
+      width: 100%;
+    }
+
+    .swatch-info {
+      padding: 12px 16px;
+      background-color: #FFFFFF;
+    }
+
+    .swatch-info h4 {
+      font-size: 0.95rem;
+      font-weight: 700;
+    }
+
+    .swatch-info p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-family: monospace;
+    }
+
+    /* Button Showcase Grid */
+    .button-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .btn {
+      padding: 14px 28px;
+      border-radius: var(--radius-sm);
+      font-size: 0.95rem;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      text-decoration: none;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+    }
+
+    /* Alternate Button Styles */
+    .btn-ice-white {
+      background-color: #FFFFFF;
+      color: var(--text-dark);
+      border: 1px solid var(--border-color);
+    }
+
+    .btn-baby-blue {
+      background-color: var(--baby-blue);
+      color: #1A495E;
+    }
+
+    .btn-lila {
+      background-color: var(--pastel-lila);
+      color: #3D2366;
+    }
+
+    .btn-violet {
+      background-color: var(--pastel-violet);
+      color: #FFFFFF;
+    }
+
+    .btn-pink {
+      background-color: var(--pastel-pink);
+      color: #5C1E34;
+    }
+
+    .btn-mint {
+      background-color: var(--pastel-mint);
+      color: #1B4D36;
+    }
+
+    .btn-dark {
+      background-color: var(--text-dark);
+      color: #FFFFFF;
+    }
+
+    .btn-gradient-1 {
+      background: linear-gradient(135deg, var(--baby-blue), var(--pastel-lila));
+      color: var(--text-dark);
+    }
+
+    .btn-gradient-2 {
+      background: linear-gradient(135deg, var(--pastel-lila), var(--pastel-violet));
+      color: #FFFFFF;
+    }
+
+    .btn-gradient-3 {
+      background: linear-gradient(135deg, var(--pastel-pink), var(--pastel-lila));
+      color: var(--text-dark);
+    }
+
+    /* Hero Preview Section */
+    .hero-preview {
+      background: linear-gradient(180deg, rgba(184, 225, 242, 0.2) 0%, rgba(216, 196, 248, 0.1) 100%);
+      border: 1px solid rgba(216, 196, 248, 0.3);
+      border-radius: var(--radius-lg);
+      padding: 60px 40px;
+      text-align: center;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 6px 16px;
+      background-color: var(--pastel-lila);
+      color: #3D2366;
+      font-size: 0.85rem;
+      font-weight: 700;
+      border-radius: 20px;
+      margin-bottom: 20px;
+    }
+
+    .hero-title {
+      font-size: 2.2rem;
+      font-weight: 800;
+      margin-bottom: 16px;
+      line-height: 1.25;
+    }
+
+    .hero-desc {
+      max-width: 600px;
+      margin: 0 auto 30px auto;
+      color: var(--text-muted);
+      font-size: 1.05rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    /* Table Preview */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+
+    th, td {
+      padding: 14px 18px;
+      text-align: left;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    th {
+      background-color: var(--bg-base);
+      font-weight: 700;
+      color: var(--text-dark);
+    }
+
+    tr:nth-child(even) {
+      background-color: rgba(244, 248, 250, 0.5);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    
+    <!-- Header -->
+    <header>
+      <h1>adastrabcv.com <span>UI Renk Paleti</span></h1>
+      <p>Buz Beyazı, Bebek Mavisi, Lila, Pastel Mor ve Alternatif Pastel Buton Laboratuvarı</p>
+    </header>
+
+    <!-- Renk Swatch'ları -->
+    <section class="card">
+      <div class="card-title"><span></span> Renk Paleti &amp; HEX Kodları</div>
+      <div class="color-grid">
+        
+        <div class="swatch">
+          <div class="swatch-color" style="background-color: #F4F8FA; border-bottom: 1px solid #E2E8F0;"></div>
+          <div class="swatch-info">
+            <h4>Buz Beyazı</h4>
+            <p>#F4F8FA</p>
+          </div>
+        </div>
+
+        <div class="swatch">
+          <div class="swatch-color" style="background-color: #B8E1F2;"></div>
+          <div class="swatch-info">
+            <h4>Bebek Mavisi</h4>
+            <p>#B8E1F2</p>
+          </div>
+        </div>
+
+        <div class="swatch">
+          <div class="swatch-color" style="background-color: #D8C4F8;"></div>
+          <div class="swatch-info">
+            <h4>Pastel Lila</h4>
+            <p>#D8C4F8</p>
+          </div>
+        </div>
+
+        <div class="swatch">
+          <div class="swatch-color" style="background-color: #9E86E3;"></div>
+          <div class="swatch-info">
+            <h4>Soft Pastel Mor</h4>
+            <p>#9E86E3</p>
+          </div>
+        </div>
+
+        <div class="swatch">
+          <div class="swatch-color" style="background-color: #F8C4D8;"></div>
+          <div class="swatch-info">
+            <h4>Bebek Pembesi</h4>
+            <p>#F8C4D8</p>
+          </div>
+        </div>
+
+        <div class="swatch">
+          <div class="swatch-color" style="background-color: #BCEAD5;"></div>
+          <div class="swatch-info">
+            <h4>Pastel Mint</h4>
+            <p>#BCEAD5</p>
+          </div>
+        </div>
+
+        <div class="swatch">
+          <div class="swatch-color" style="background-color: #2B263B;"></div>
+          <div class="swatch-info">
+            <h4>Derin Gece Moru</h4>
+            <p>#2B263B</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Buton Alternatifleri -->
+    <section class="card">
+      <div class="card-title"><span></span> Buton Renk Alternatifleri (Renk İsimli)</div>
+      
+      <h3 style="font-size: 1rem; color: var(--text-muted); margin-bottom: 12px;">Düz Pastel Tonlar</h3>
+      <div class="button-grid" style="margin-bottom: 28px;">
+        <button class="btn btn-violet">Soft Mor (Primary CTA)</button>
+        <button class="btn btn-lila">Pastel Lila</button>
+        <button class="btn btn-baby-blue">Bebek Mavisi</button>
+        <button class="btn btn-pink">Bebek Pembesi</button>
+        <button class="btn btn-mint">Pastel Mint</button>
+        <button class="btn btn-ice-white">Buz Beyazı (Secondary)</button>
+        <button class="btn btn-dark">Derin Mor (High Contrast)</button>
+      </div>
+
+      <h3 style="font-size: 1rem; color: var(--text-muted); margin-bottom: 12px;">Gradyan (Gradient) Geçişli Tonlar</h3>
+      <div class="button-grid">
+        <button class="btn btn-gradient-1">Mavi &rarr; Lila Geçişi</button>
+        <button class="btn btn-gradient-2">Lila &rarr; Mor Geçişi</button>
+        <button class="btn btn-gradient-3">Pembe &rarr; Lila Geçişi</button>
+      </div>
+    </section>
+
+    <!-- Gerçek UI Hero Örneği -->
+    <section class="card">
+      <div class="card-title"><span></span> Sitede Canlı Görünüm (Hero / Önizleme)</div>
+      <div class="hero-preview">
+        <span class="badge">✨ Adastra BCV &bull; AI Automation &amp; Systems</span>
+        <h2 class="hero-title">Geleceğin Dijital Sistemlerini<br>Pastel Dokunuşlarla İnşa Edin</h2>
+        <p class="hero-desc">
+          Buz beyazı zemin üzerine kurgulanan bebek mavisi, lila ve soft mor vurgular; sitenizde yüksek okunabilirlik ve modern bir kullanıcı deneyimi sunar.
+        </p>
+        <div class="hero-actions">
+          <button class="btn btn-violet">Soft Mor Buton</button>
+          <button class="btn btn-baby-blue">Bebek Mavisi Buton</button>
+          <button class="btn btn-pink">Bebek Pembesi Buton</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Kullanım Tablosu -->
+    <section class="card">
+      <div class="card-title"><span></span> UI Bileşen Önerileri</div>
+      <table>
+        <thead>
+          <tr>
+            <th>Bileşen</th>
+            <th>Önerilen Renk</th>
+            <th>HEX Kodu</th>
+            <th>Amaç</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Site Arka Planı</strong></td>
+            <td>Buz Beyazı</td>
+            <td><code>#F4F8FA</code></td>
+            <td>Sitenin ana ferah zemini</td>
+          </tr>
+          <tr>
+            <td><strong>Ana CTA Butonu</strong></td>
+            <td>Soft Mor / Gradyan</td>
+            <td><code>#9E86E3</code></td>
+            <td>Dönüşüm odaklı ana tıklama butonları</td>
+          </tr>
+          <tr>
+            <td><strong>İkincil Butonlar / Tag'ler</strong></td>
+            <td>Bebek Mavisi / Lila</td>
+            <td><code>#B8E1F2 / #D8C4F8</code></td>
+            <td>Sekmeler, filtreler, ikincil eylemler</td>
+          </tr>
+          <tr>
+            <td><strong>Promosyon / Rozetler</strong></td>
+            <td>Bebek Pembesi</td>
+            <td><code>#F8C4D8</code></td>
+            <td>Dikkat çekici özel etiketler ve kampanya alanları</td>
+          </tr>
+          <tr>
+            <td><strong>Başlık ve Metinler</strong></td>
+            <td>Derin Gece Moru</td>
+            <td><code>#2B263B</code></td>
+            <td>Keskin ve net okunabilirlik</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+  </div>
+
+</body>
+</html>

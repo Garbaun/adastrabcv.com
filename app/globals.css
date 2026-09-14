@@ -1,0 +1,55 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Tema garanti katmanı: yardımcı sınıflardan bağımsız gövde zemini */
+.dark {
+  color-scheme: dark;
+}
+.dark body {
+  background-color: #2b263b;
+  color: #fff;
+}
+
+@theme {
+  --color-ice: #f4f8fa;
+  --color-baby: #b8e1f2;
+  --color-lila: #d8c4f8;
+  --color-violet: #9e86e3;
+  --color-pink: #f8c4d8;
+  --color-mint: #bcead5;
+  --color-night: #2b263b;
+  --color-muted: #656078;
+  --color-line: #e2e8f0;
+
+  --font-sans: var(--font-jakarta), ui-sans-serif, system-ui, sans-serif;
+}
+
+:root {
+  --bg-base: #f4f8fa;
+  --text-dark: #2b263b;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+body {
+  background: var(--bg-base);
+  color: var(--text-dark);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+}
+
+::selection {
+  background: #9e86e3;
+  color: #fff;
+}
