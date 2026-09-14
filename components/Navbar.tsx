@@ -5,6 +5,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import ThemeToggle from "@/components/ThemeToggle";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 const links = [
   { href: "/web", label: "Web", mega: true },
@@ -298,15 +299,6 @@ const dijitalMenu: MegaCol[] = [
   },
 ];
 
-function GlobeIcon() {
-  return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden>
-      <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.8" />
-      <path d="M3 12h18M12 3c2.5 2.5 3.8 5.6 3.8 9S14.5 18.5 12 21c-2.5-2.5-3.8-5.6-3.8-9S9.5 5.5 12 3Z" stroke="currentColor" strokeWidth="1.8" />
-    </svg>
-  );
-}
-
 function MegaCols({ cols, baseHref, onNavigate }: { cols: MegaCol[]; baseHref: string; onNavigate: () => void }) {
   return (
     <>
@@ -449,21 +441,12 @@ export default function Navbar() {
         {/* Sağ ikonlar (masaüstü) */}
         <div className="hidden shrink-0 items-center gap-3 lg:flex" onMouseEnter={close}>
           <ThemeToggle />
-          <button
-            type="button"
-            aria-label="Dil / Bölge"
-            className={`flex h-10 w-10 items-center justify-center rounded-full shadow-sm transition ${
-              overlay
-                ? "bg-white/15 text-white hover:bg-white/25"
-                : "bg-white text-night hover:bg-lila/50 dark:bg-white/10 dark:text-white dark:hover:bg-white/20"
-            }`}
-          >
-            <GlobeIcon />
-          </button>
+          <LanguageSwitcher overlay={overlay} />
         </div>
 
-        {/* Sağ ikonlar (mobil): tema + hamburger */}
+        {/* Sağ ikonlar (mobil): dil + tema + hamburger */}
         <div className="flex shrink-0 items-center gap-2 lg:hidden">
+          <LanguageSwitcher overlay={overlay && !mobileOpen} />
           <ThemeToggle />
           <button
             type="button"

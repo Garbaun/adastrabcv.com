@@ -9,13 +9,7 @@ const offices = [
   { city: "Bangkok Ofis", addr: "267/11 Sukhumvit, Watthana, Ekkamai, 10110", tel: "+66 82 705 6398", href: "tel:+66827056398", wa: "https://wa.me/66827056398" },
 ];
 
-const menu = [
-  { href: "/", label: "Anasayfa" },
-  { href: "/hizmetler", label: "Hizmetler" },
-  { href: "/surec", label: "Süreç" },
-  { href: "/sss", label: "SSS" },
-  { href: "/iletisim", label: "İletişim" },
-];
+
 
 const partners = [
   { src: "/google-partner-logo.webp", alt: "Google Partner" },
@@ -55,19 +49,8 @@ export default function Footer() {
   return (
     <footer className="mt-20 w-full border-t border-line bg-ice text-night dark:border-white/10 dark:bg-night dark:text-white">
       <div className="container mx-auto max-w-6xl px-5">
-        {/* top */}
-        <div className="top flex flex-col gap-4 border-b border-night/10 py-8 md:flex-row md:items-center md:justify-between dark:border-white/10">
-          <nav className="footer-menu flex flex-wrap gap-2">
-            {menu.map((m) => (
-              <Link
-                key={m.href}
-                href={m.href}
-                className="rounded-full px-4 py-2 text-sm font-semibold text-night/70 transition hover:bg-night/5 hover:text-night dark:text-white/70 dark:hover:bg-white/10 dark:hover:text-white"
-              >
-                {m.label}
-              </Link>
-            ))}
-          </nav>
+        {/* top — sadece takip */}
+        <div className="top flex justify-end border-b border-night/10 py-8 dark:border-white/10">
           <div className="text-footer flex items-center gap-3">
             <span className="text-xs font-extrabold uppercase tracking-[0.2em] text-night/60 dark:text-white/60">
               bizi takip edin

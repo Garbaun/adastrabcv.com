@@ -11,7 +11,7 @@ const services = [
     desc: "LinkedIn, Meta ve Google ekosistemlerini tek bir akışta birleştiriyoruz. Form dolduran rastgele kişiler değil; bütçe sahibi, karar merci yöneticiler ve kurumsal potansiyel müşteriler taşıyan otomatik sistem kuruyoruz.",
     color: "bg-baby",
     cta: "Funnel'ı Keşfet",
-    href: "/hizmetler",
+    href: "/web/ozel-e-ticaret-yazilimi",
   },
   {
     tag: "02 — Performans",
@@ -20,7 +20,7 @@ const services = [
     desc: "Tıklama maliyetlerini değil, kasanıza giren sözleşme sayısını ve yatırım geri dönüşünü (ROAS) maksimize eden agresif, veri odaklı bütçe yönetimi sağlıyoruz.",
     color: "bg-lila",
     cta: "Performansı Keşfet",
-    href: "/hizmetler",
+    href: "/dijital-pazarlama/google-arama-reklamlari",
   },
   {
     tag: "03 — Web & UI/UX",
@@ -29,7 +29,7 @@ const services = [
     desc: "İlk 3 saniyede “Bunlar bu işin zirvesi” algısı yaratan, yüksek hızlı ve kusursuz arayüzler. Kurumsal kimliğinizi en üst düzeyde yansıtan dijital altyapılar.",
     color: "bg-pink",
     cta: "Tasarımı Keşfet",
-    href: "/hizmetler",
+    href: "/web/kurumsal-web-tasarim",
   },
 ];
 
@@ -96,8 +96,8 @@ export default function Home() {
                   </li>
                 ))}
               </ul>
-              <Link href="/surec" className="mt-4 inline-block text-sm font-bold text-violet underline dark:text-lila">
-                Süreci detaylı gör →
+              <Link href="/iletisim" className="mt-4 inline-block text-sm font-bold text-violet underline dark:text-lila">
+                İletişime geç →
               </Link>
             </div>
           </Reveal>
@@ -109,10 +109,9 @@ export default function Home() {
         <Reveal direction="up">
           <div className="rounded-2xl bg-gradient-to-r from-lila via-violet to-baby p-10 text-center text-white">
             <h2 className="text-2xl font-extrabold md:text-3xl">Bütçeni büyütmeden önce sistemi kur.</h2>
-            <p className="mx-auto mt-2 max-w-xl text-white/85">SSS ve detaylar için sayfalara göz at, sonra 30 dakikalık strateji görüşmesi al.</p>
-            <div className="mt-6 flex justify-center gap-3">
-              <Link href="/sss" className="rounded-lg bg-white px-6 py-3 text-sm font-bold text-night">SSS</Link>
-              <Link href="/iletisim" className="rounded-lg bg-night px-6 py-3 text-sm font-bold text-white">İletişim</Link>
+            <p className="mx-auto mt-2 max-w-xl text-white/85">30 dakikalık strateji görüşmesi al.</p>
+            <div className="mt-6 flex justify-center">
+              <Link href="/iletisim" className="rounded-lg bg-night px-8 py-3 text-sm font-bold text-white">İletişim</Link>
             </div>
           </div>
         </Reveal>
