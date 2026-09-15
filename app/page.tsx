@@ -1,35 +1,49 @@
 import Link from "next/link";
 import Reveal from "@/components/Reveal";
-import StackedCards from "@/components/StackedCards";
 import HeroSlider from "@/components/HeroSlider";
+import StackedCards from "@/components/StackedCards";
 
-const services = [
+const workSteps = [
   {
-    tag: "01 — Funnel",
-    title: "Omnichannel B2B Funnel Kurgusu",
-    sub: "Doğrudan Karar Alıcılara Ulaşan Satış Hunileri",
-    desc: "LinkedIn, Meta ve Google ekosistemlerini tek bir akışta birleştiriyoruz. Form dolduran rastgele kişiler değil; bütçe sahibi, karar merci yöneticiler ve kurumsal potansiyel müşteriler taşıyan otomatik sistem kuruyoruz.",
+    num: "01",
+    title: "TEŞHİS & VERİ MADENCİLİĞİ",
+    spot: "Rastgele stratejiler değil, veriden süzülen net bir harita.",
+    desc: "Mevcut dijital varlıklarınızı, B2B dönüşüm huni (funnel) yapınızı ve pazardaki konumunuzu derinlemesine inceliyoruz. Yapay zeka destekli analiz araçlarımızla süreçlerinizdeki tıkanıklıkları, kaçırılan fırsatları ve hedef kitlenizin dijital ayak izlerini tespit ediyoruz.",
+    details: ["Dijital Olgunluk ve Funnel Analizi", "Hedef Kitle & Rakip Veri Haritalama", "Süreç Tıkanıklığı ve Büyüme Potansiyeli Tespiti"],
     color: "bg-baby",
-    cta: "Funnel'ı Keşfet",
-    href: "/web/ozel-e-ticaret-yazilimi",
   },
   {
-    tag: "02 — Performans",
-    title: "Yüksek Bütçeli Performans Pazarlaması",
-    sub: "ROAS ve Ciro Odaklı Reklam Yönetimi",
-    desc: "Tıklama maliyetlerini değil, kasanıza giren sözleşme sayısını ve yatırım geri dönüşünü (ROAS) maksimize eden agresif, veri odaklı bütçe yönetimi sağlıyoruz.",
+    num: "02",
+    title: "MİMARİ & OTOMASYON STRATEJİSİ",
+    spot: "Karmaşık süreçleri otomatize eden ölçeklenebilir sistem kurgusu.",
+    desc: "Analiz verilerine dayanarak işletmenize özel dijital mimariyi tasarlıyoruz. Micro SaaS modüllerinden n8n iş akışlarına, Google & Meta reklam stratejilerinden B2B büyüme senaryolarına kadar tüm parçaları birbirine entegre eden yol haritamızı netleştiriyoruz.",
+    details: ["Özel Otomasyon ve SaaS Mimarisi Tasarımı", "Çok Kanallı (Omnichannel) Büyüme Senaryoları", "Zaman ve Maliyet Optimizasyon Modeli"],
     color: "bg-lila",
-    cta: "Performansı Keşfet",
-    href: "/dijital-pazarlama/google-arama-reklamlari",
   },
   {
-    tag: "03 — Web & UI/UX",
-    title: "Prestij Odaklı Web ve UI/UX Tasarımı",
-    sub: "Güven Veren Dijital Vitrinler",
-    desc: "İlk 3 saniyede “Bunlar bu işin zirvesi” algısı yaratan, yüksek hızlı ve kusursuz arayüzler. Kurumsal kimliğinizi en üst düzeyde yansıtan dijital altyapılar.",
+    num: "03",
+    title: "CANLI SİMÜLASYON & PROTOTİP",
+    spot: "Teoride kalan fikirler değil, çalışan canlı prototipler.",
+    desc: "Kurguladığımız mimariyi ve yönetim panellerini canlı demo ortamında çalışır halde size sunuyoruz. Otomasyonların nasıl tetiklendiğini, verinin nasıl işlendiğini ve sistemin operasyonel yükünüzü nasıl hafiflettiğini birebir deneyimlemenizi sağlıyoruz.",
+    details: ["Çalışan Sistem ve Panel Prototipi", "Gerçek Zamanlı Veri Akış Gösterimi", "Büyüme ve ROI Projeksiyon Sunumu"],
+    color: "bg-mint",
+  },
+  {
+    num: "04",
+    title: "HASSAS AYAR & İTERASYON",
+    spot: "Mükemmel performans için sürekli test, geri bildirim ve optimize.",
+    desc: "Demo aşamasındaki geri bildirimleriniz doğrultusunda sistemi ince ayarlarla optimize ediyoruz. Veritabanı bağlantılarını, reklam hunilerini ve n8n otomasyon senaryolarını canlı saha şartlarına en yüksek verimle yanıt verecek şekilde sıkılaştırıyoruz.",
+    details: ["Kullanıcı ve Operasyon Deneyimi İyileştirmeleri", "A/B Testleri ve Güvenlik/Performans Sıkılaştırması", "Kesintisiz Entegrasyon ve Veri Doğrulama"],
     color: "bg-pink",
-    cta: "Tasarımı Keşfet",
-    href: "/web/kurumsal-web-tasarim",
+  },
+  {
+    num: "05",
+    title: "OTO-PİLOT & SÜREKLİ BÜYÜME",
+    spot: "Sisteminiz 7/24 çalışır, işiniz ölçeklenir.",
+    desc: "Projeyi tam fonksiyonel olarak yayına alıyor, anahtarı teslim ediyoruz. İşletmeniz arka planda tıkır tıkır çalışan otomasyonlar ve B2B huni sistemleriyle büyürken, biz sistemin kesintisiz çalışmasını ve veri odaklı ölçeklenmesini izlemeye devam ediyoruz.",
+    details: ["Canlıya Alma ve Sistem Entegrasyonu", "Sürekli Performans İzleme ve Dashboard Erişimi", "7/24 Otopilot Operasyon Güvencesi"],
+    color: "bg-violet",
+    cta: true,
   },
 ];
 
@@ -42,55 +56,42 @@ const steps = [
 export default function Home() {
   return (
     <div>
-      {/* HERO — tam genişlik slider, header'ın altından başlar */}
       <HeroSlider />
 
-      {/* HİZMETLER — Ajans360 tarzı üst üste binen kartlar / TAM GENİŞLİK */}
-      <section className="mt-20 w-full">
-        <div className="mx-auto max-w-6xl px-5">
-          <Reveal direction="up">
-            <p className="text-center text-xs font-extrabold tracking-[0.2em] text-violet">UÇTAN UCA B2B STRATEJİSİ</p>
-            <h2 className="mt-3 text-center text-3xl font-extrabold tracking-tight md:text-4xl">
-              İşinizi Büyüten Dijital Mimari
-            </h2>
-            <p className="mx-auto mt-3 max-w-2xl text-center text-muted dark:text-white/60">
-              Scroll yaptıkça kartlar üst üste biniyor — alttaki küçülüp blur ile kayboluyor, Markanızı yüksek ölçekli
-              firmaların ve karar alıcıların gözünde zirveye taşıyan 3 ana sistem.
-            </p>
-          </Reveal>
-        </div>
-
-        <div className="mt-6 w-full">
-          <StackedCards items={services} />
-        </div>
-
-        <div className="mx-auto max-w-6xl px-5">
-          <Reveal direction="up">
-            <p className="mx-auto mt-6 max-w-3xl rounded-xl bg-mint/40 p-4 text-center text-sm text-night dark:bg-mint/15 dark:text-white">
-              + Micro SaaS ile rakip & müşteri analizi, günlük-haftalık-aylık raporlama ve Google Tag ile tek yerden kontrol imkânı.
-            </p>
-          </Reveal>
-        </div>
+      {/* 5 ADIM — Nasıl Çalışıyoruz — hero'nun hemen altında, arkaya kaybolma efekti geri getirildi */}
+      <section className="w-full">
+        <StackedCards
+          items={workSteps.map((s) => ({
+            tag: `${s.num} // ${s.title}`,
+            title: s.title,
+            sub: s.spot,
+            desc: s.desc,
+            color: s.color,
+            cta: s.cta ? "Sisteminizi Şimdi Kurun" : undefined,
+            href: s.cta ? "/iletisim" : undefined,
+            spot: s.spot,
+            details: s.details,
+          }))}
+        />
       </section>
 
       {/* NEDEN AD ASTRA */}
       <section className="mx-auto mt-20 max-w-6xl px-5">
         <div className="grid gap-6 md:grid-cols-2">
           <Reveal direction="left">
-            <div className="h-full rounded-2xl bg-night p-8 text-white dark:border dark:border-white/10">
+            <div className="h-full bg-night p-8 text-white dark:border dark:border-white/10">
               <h2 className="text-2xl font-extrabold">Neden Ad Astra?</h2>
-              <p className="mt-3 text-white/70 leading-7">
-                Klasik “hakkımızda” yazıları yerine net konuşuyoruz: vanity metrik yok, sözleşme ve ciro var.
-                Kurumsal müşterinin sevdiği şey şeffaf süreç ve raporlanabilir sonuçtur.
+              <p className="mt-3 leading-7 text-white/70">
+                Klasik “hakkımızda” yazıları yerine net konuşuyoruz: vanity metrik yok, sözleşme ve ciro var. Kurumsal müşterinin sevdiği şey şeffaf süreç ve raporlanabilir sonuçtur.
               </p>
             </div>
           </Reveal>
           <Reveal direction="right">
-            <div className="h-full rounded-2xl border border-line bg-white p-8 dark:border-white/10 dark:bg-white/5">
+            <div className="h-full border border-line bg-white p-8 dark:border-white/10 dark:bg-white/5">
               <h2 className="text-2xl font-extrabold">Çalışma Sürecimiz</h2>
               <ul className="mt-4 flex flex-col gap-3">
                 {steps.map((st, idx) => (
-                  <li key={st.t} className="rounded-xl bg-ice p-4 dark:bg-white/5">
+                  <li key={st.t} className="bg-ice p-4 dark:bg-white/5">
                     <p className="text-sm font-bold">{idx + 1}. {st.t}</p>
                     <p className="text-sm text-muted dark:text-white/60">{st.d}</p>
                   </li>
@@ -107,11 +108,11 @@ export default function Home() {
       {/* CTA */}
       <section className="mx-auto mt-20 max-w-6xl px-5">
         <Reveal direction="up">
-          <div className="rounded-2xl bg-gradient-to-r from-lila via-violet to-baby p-10 text-center text-white">
+          <div className="bg-gradient-to-r from-lila via-violet to-baby p-10 text-center text-white">
             <h2 className="text-2xl font-extrabold md:text-3xl">Bütçeni büyütmeden önce sistemi kur.</h2>
             <p className="mx-auto mt-2 max-w-xl text-white/85">30 dakikalık strateji görüşmesi al.</p>
             <div className="mt-6 flex justify-center">
-              <Link href="/iletisim" className="rounded-lg bg-night px-8 py-3 text-sm font-bold text-white">İletişim</Link>
+              <Link href="/iletisim" className="bg-night px-8 py-3 text-sm font-bold text-white">İletişim</Link>
             </div>
           </div>
         </Reveal>

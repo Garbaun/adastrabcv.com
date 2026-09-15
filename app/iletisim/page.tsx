@@ -244,10 +244,8 @@ export default function Page() {
                   <button
                     type="button"
                     onClick={() => setActive(i)}
-                    className={`flex h-full w-full flex-col items-center rounded-xl border bg-white p-6 text-center transition dark:bg-white/5 ${
-                      isActive
-                        ? "border-violet dark:border-lila"
-                        : "border-line hover:border-violet/50 dark:border-white/10"
+                    className={`flex h-full w-full flex-col items-center bg-white p-6 text-center shadow-[0_4px_24px_rgba(43,38,59,0.10)] dark:bg-white/[0.06] dark:shadow-[0_4px_24px_rgba(0,0,0,0.35)] transition hover:-translate-y-1 hover:shadow-[0_8px_32px_rgba(43,38,59,0.16)] dark:hover:shadow-[0_8px_32px_rgba(0,0,0,0.45)] ${
+                      isActive ? "ring-2 ring-violet dark:ring-lila" : ""
                     }`}
                   >
                     <span className="text-night dark:text-white">
@@ -290,13 +288,13 @@ export default function Page() {
           })}
         </div>
 
-        {/* harita — kart genişliğinde, responsive */}
-        <div className="mt-6 w-full">
+        {/* harita — kart genişliğinde, responsive, keskin köşe çerçevesiz gölge */}
+        <div className="mt-6 w-full shadow-[0_4px_24px_rgba(43,38,59,0.10)] dark:shadow-[0_4px_24px_rgba(0,0,0,0.35)]">
           <iframe
             key={`${current.lat}-${current.lng}`}
             title={`${current.name} harita`}
             src={`https://maps.google.com/maps?q=${current.lat},${current.lng}&z=14&output=embed`}
-            className="h-[380px] w-full rounded-xl border-0 grayscale transition duration-500 hover:grayscale-0 md:h-[480px]"
+            className="h-[380px] w-full border-0 grayscale transition duration-500 hover:grayscale-0 md:h-[480px]"
             loading="lazy"
           />
         </div>

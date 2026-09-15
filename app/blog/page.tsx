@@ -1,7 +1,8 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
+import Reveal from "@/components/Reveal";
 
 type Post = {
   id: number;
@@ -10,11 +11,12 @@ type Post = {
   excerpt: string;
   tags: string[];
   date: string;
+  dateObj: Date;
   minutes: number;
   author: string;
+  color: string;
 };
 
-// deterministik sözde-random (hydration uyumu için)
 function rng(seed: number) {
   return () => {
     seed |= 0;
@@ -35,6 +37,19 @@ const categories = [
   "Video Prodüksiyon",
   "B2B Funnel",
 ];
+
+// Yazara göre konu eşlemesi (istek)
+function authorForCategory(cat: string): string {
+  if (["Web Tasarım", "E-Ticaret", "SEO & İçerik"].includes(cat)) return "Kerem Karayız"; // Yazılım donanım
+  if (["Marka Stratejisi", "Video Prodüksiyon"].includes(cat)) return "Yiğithan Tozan"; // Tasarım Edit UI UX
+  if (["B2B Funnel"].includes(cat)) return "Yağmur Aydan"; // Şirket CEO B2B Kreatif
+  if (["Sosyal Medya", "Performans Pazarlaması"].includes(cat)) return "Ceren Uğurlu"; // Frontend coldmail medya
+  // fallback dağılım
+  if (cat.includes("Web") || cat.includes("E-Ticaret")) return "Kerem Karayız";
+  if (cat.includes("Tasarım") || cat.includes("Video") || cat.includes("Marka")) return "Yiğithan Tozan";
+  if (cat.includes("B2B")) return "Yağmur Aydan";
+  return "Ceren Uğurlu";
+}
 
 const titles = [
   "ROAS Odaklı Reklam Kurgusu Nasıl Kurulur?",
@@ -57,6 +72,16 @@ const titles = [
   "UGC Videolarla Güven İnşa Etme",
   "Funnel'da Teklif-Mesaj Uyumu",
   "Blog Yazılarıyla Organik Büyüme",
+  "Core Web Vitals ile Hız Optimizasyonu",
+  "B2B Soğuk Mailde Açılma Oranını Artırma",
+  "YouTube Reklamlarında Atlanamaz Kurgu",
+  "Merchant Center Feed Nasıl Optimize Edilir?",
+  "Teknik SEO: Taranabilirlik Denetimi",
+  "Instagram Reels Algoritması 2026",
+  "LinkedIn'de Karar Alıcı Hedefleme",
+  "Marka Stratejisinde Konumlandırma Haritası",
+  "E-Ticarette Kargo Sürtünmesini Azaltma",
+  "Video Prodüksiyonda Renk ve Işık",
 ];
 
 const excerpts = [
@@ -66,33 +91,51 @@ const excerpts = [
   "Form dolduran herkes müşteri adayı değildir; nitelikli lead ayrımı için skorlama ve eleme yöntemleri…",
   "Site hızı, taranabilirlik ve şema işaretlemeleriyle arama görünürlüğünü artırmanın teknik temelleri…",
   "Kısa videoda ilk 2 saniyede yakalayan kanca cümleleri ve seri üretim için şablon sistemi…",
+  "Yazılım ve donanım uyumunda altyapı kararları, ölçeklenebilir mimari ve bakım planı üzerine notlar…",
+  "Tasarım edit ve UI/UX akışında bileşen kütüphanesi, tutarlılık ve mikro etkileşimler…",
+  "Şirket CEO'ları için B2B funnel: teklif, sunum ve kreatifin aynı dili konuşması…",
+  "Frontend ve coldmail tarafında medya reklamlarının açılma, tıklama ve dönüşüm üçgeni…",
 ];
 
-const tagBank = ["ROAS", "B2B", "SEO", "Web Tasarım", "Reklam", "İçerik", "Marka", "E-Ticaret", "Video", "Funnel", "LinkedIn", "Meta Ads", "UX", "Strateji"];
-const authors = ["Pazarlama Direktörleri", "Marka Yöneticileri", "E-Ticaret Yöneticileri", "Satış Direktörleri, CEO", "İçerik Ekipleri", "Girişimciler, KOBİ'ler"];
+const tagBank = ["ROAS", "B2B", "SEO", "Web Tasarım", "Reklam", "İçerik", "Marka", "E-Ticaret", "Video", "Funnel", "LinkedIn", "Meta Ads", "UX", "Strateji", "Coldmail", "Frontend", "Yazılım", "Donanım", "Kreatif", "Medya"];
+const palette = ["bg-baby", "bg-lila", "bg-violet", "bg-pink", "bg-mint", "bg-ice", "bg-[#B8E1F2]", "bg-[#D8C4F8]", "bg-[#BCEAD5]"];
 
 function buildPosts(count: number): Post[] {
   const rand = rng(42);
   const pick = <T,>(arr: T[]) => arr[Math.floor(rand() * arr.length)];
+  // günümüz: 15.09.2026 — geriye doğru
+  const base = new Date(2026, 8, 15); // ay 0-index
   return Array.from({ length: count }, (_, i) => {
-    const tags = Array.from({ length: 3 + Math.floor(rand() * 2) }, () => pick(tagBank));
-    const day = 1 + Math.floor(rand() * 28);
-    const month = 1 + Math.floor(rand() * 9);
+    const category = categories[i % categories.length];
+    const title = titles[i % titles.length] + (i >= titles.length ? ` — ${Math.floor(i / titles.length) + 1}` : "");
+    const excerpt = excerpts[i % excerpts.length];
+    const tags = [...new Set(Array.from({ length: 3 + Math.floor(rand() * 2) }, () => pick(tagBank)))].slice(0, 4);
+    const minutes = 3 + Math.floor(rand() * 8);
+    const author = authorForCategory(category);
+    const color = palette[Math.floor(rand() * palette.length)];
+    // tarihler geriye doğru: her yazı ~1 gün geriye (deterministik + hafif random saat)
+    const d = new Date(base);
+    d.setDate(base.getDate() - i);
+    d.setHours(10 + Math.floor(rand() * 8));
+    const dd = String(d.getDate()).padStart(2, "0");
+    const mm = String(d.getMonth() + 1).padStart(2, "0");
+    const yyyy = d.getFullYear();
     return {
       id: i + 1,
-      category: categories[i % categories.length],
-      title: titles[i % titles.length],
-      excerpt: excerpts[i % excerpts.length],
-      tags: [...new Set(tags)].slice(0, 4),
-      date: `${String(day).padStart(2, "0")}.${String(month).padStart(2, "0")}.2026`,
-      minutes: 4 + Math.floor(rand() * 6),
-      author: pick(authors),
+      category,
+      title,
+      excerpt,
+      tags,
+      date: `${dd}.${mm}.${yyyy}`,
+      dateObj: d,
+      minutes,
+      author,
+      color,
     };
   });
 }
 
-const ALL_POSTS = buildPosts(24);
-const PER_PAGE = 4;
+const ALL_POSTS = buildPosts(200);
 
 function SearchIcon() {
   return (
@@ -103,134 +146,178 @@ function SearchIcon() {
   );
 }
 
+function UpIcon() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden>
+      <path d="M12 5l-7 7M12 5l7 7M12 5v14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
 export default function Page() {
   const [query, setQuery] = useState("");
-  const [page, setPage] = useState(1);
+  const [visible, setVisible] = useState(12);
+  const [showUp, setShowUp] = useState(false);
+  const sentinelRef = useRef<HTMLDivElement | null>(null);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLocaleLowerCase("tr");
     if (!q) return ALL_POSTS;
     return ALL_POSTS.filter((p) =>
-      [p.title, p.category, p.excerpt, p.tags.join(" ")].join(" ").toLocaleLowerCase("tr").includes(q)
+      [p.title, p.category, p.excerpt, p.tags.join(" "), p.author].join(" ").toLocaleLowerCase("tr").includes(q)
     );
   }, [query]);
 
-  const totalPages = Math.max(1, Math.ceil(filtered.length / PER_PAGE));
-  const safePage = Math.min(page, totalPages);
-  const posts = filtered.slice((safePage - 1) * PER_PAGE, safePage * PER_PAGE);
+  // query değişince başa dön
+  useEffect(() => {
+    setVisible(12);
+  }, [query]);
 
-  const go = (n: number) => {
-    setPage(Math.min(Math.max(1, n), totalPages));
-    window.scrollTo({ top: 0, behavior: "smooth" });
+  // scroll ile yükle (GSAP efekti için sentinel)
+  useEffect(() => {
+    const el = sentinelRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setVisible((v) => Math.min(v + 12, filtered.length));
+        }
+      },
+      { rootMargin: "400px" }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [filtered.length]);
+
+  // yukarı ok görünürlüğü
+  useEffect(() => {
+    const onScroll = () => setShowUp(window.scrollY > 600);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  // yavaş başla → hızlanarak tepeye çık (easeInQuad)
+  const scrollToTop = () => {
+    const startY = window.scrollY;
+    const duration = 1100; // ms — yavaş->hızlı hissi için biraz uzun
+    const startTime = performance.now();
+    const easeInQuad = (t: number) => t * t; // t:0→1 => yavaş başla, sonra hızlan
+    const step = (now: number) => {
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = easeInQuad(progress);
+      window.scrollTo(0, startY * (1 - eased));
+      if (progress < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
   };
 
-  const pageNums = useMemo(() => {
-    const nums: (number | "…")[] = [];
-    if (totalPages <= 5) {
-      for (let i = 1; i <= totalPages; i++) nums.push(i);
-    } else {
-      nums.push(1, 2, 3, "…", totalPages);
-      if (safePage > 3 && safePage < totalPages) nums.splice(3, 0, safePage);
-    }
-    return [...new Set(nums)];
-  }, [totalPages, safePage]);
+  const posts = filtered.slice(0, visible);
 
   return (
-    <div className="bg-gradient-to-b from-baby/70 via-lila/25 to-ice pt-28 dark:from-night dark:via-night dark:to-night md:pt-24">
-      <div className="mx-auto max-w-7xl px-5 pb-16">
-        {/* arama */}
-        <div className="mx-auto mt-6 flex max-w-5xl items-center gap-3 rounded-2xl border border-line bg-white px-5 py-4 shadow-md dark:border-white/10 dark:bg-white/5">
-          <span className="text-night/40 dark:text-white/40">
-            <SearchIcon />
-          </span>
-          <input
-            value={query}
-            onChange={(e) => {
-              setQuery(e.target.value);
-              setPage(1);
-            }}
-            placeholder="Blog başlığı, etiket veya konu ara…"
-            className="w-full bg-transparent text-sm text-night outline-none placeholder:text-night/40 dark:text-white dark:placeholder:text-white/40"
-          />
+    <div className="w-full bg-ice dark:bg-night">
+      {/* HERO 1920x600 — diğer sayfalarla aynı */}
+      <section className="w-full max-w-[1920px] mx-auto h-[420px] md:h-[600px] flex items-center justify-center bg-gradient-to-br from-violet via-lila to-baby dark:from-night dark:via-violet/30 dark:to-night relative overflow-hidden">
+        <div className="absolute inset-0 opacity-20" style={{ backgroundImage: "radial-gradient(circle at 2px 2px, #2B263B 1px, transparent 0)", backgroundSize: "24px 24px" }} />
+        <div className="relative text-center px-5">
+          <p className="text-xs font-extrabold tracking-[0.25em] text-white/80">1920×600 — HERO</p>
+          <h1 className="mt-3 text-4xl md:text-6xl font-extrabold tracking-tight text-white">Blog</h1>
+          <p className="mt-3 text-sm md:text-base font-semibold text-white/80">200 içerik — geriye doğru tarihlenmiş, konuya göre yazarlı</p>
+          <p className="mt-2 inline-block rounded-full bg-white/20 px-4 py-1 text-xs font-bold text-white backdrop-blur">Görsel sonra eklenecek — 1920×600</p>
         </div>
+      </section>
 
-        <p className="mx-auto mt-4 max-w-5xl text-xs font-semibold text-night/60 dark:text-white/60">
-          {filtered.length} blog içeriği bulundu · Sayfa {safePage}/{totalPages}
-        </p>
+      {/* ARAMA BANNER — hero'nun hemen altında, 1920 genişlikte banner içinde */}
+      <section className="w-full max-w-[1920px] mx-auto bg-white dark:bg-[#1E1B2E] border-y-2 border-night/10 dark:border-white/10">
+        <div className="mx-auto max-w-7xl px-5 py-5 md:py-6">
+          <div className="flex items-center gap-3 bg-ice dark:bg-white/5 px-5 py-4 border-2 border-night/10 dark:border-white/10">
+            <span className="text-night/40 dark:text-white/40">
+              <SearchIcon />
+            </span>
+            <input
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Blog başlığı, etiket, konu veya yazar ara… (örn: Kerem, Yiğithan, Yağmur, Ceren)"
+              className="w-full bg-transparent text-sm font-semibold text-night outline-none placeholder:text-night/40 dark:text-white dark:placeholder:text-white/40"
+            />
+            {query && (
+              <button type="button" onClick={() => setQuery("")} className="text-xs font-bold text-violet dark:text-lila">
+                Temizle
+              </button>
+            )}
+          </div>
+          <p className="mt-3 text-xs font-semibold text-night/60 dark:text-white/60">
+            {filtered.length} içerik bulundu · {posts.length} gösteriliyor · Tarihler 15.09.2026'dan geriye doğru
+          </p>
+        </div>
+      </section>
 
-        {/* kartlar */}
-        <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {posts.map((p) => (
-            <article
-              key={p.id}
-              className="flex flex-col rounded-2xl border border-line bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg dark:border-white/10 dark:bg-white/5"
-            >
-              <span className="w-fit rounded-full bg-mint/60 px-3 py-1 text-[11px] font-extrabold uppercase tracking-wide text-night">
-                {p.category}
-              </span>
-              <h2 className="mt-3 line-clamp-2 text-[17px] font-extrabold leading-6">{p.title}</h2>
-              <p className="mt-2 line-clamp-4 text-sm leading-6 text-night/70 dark:text-white/60">
-                {p.excerpt}
-              </p>
-              <div className="mt-3 flex flex-wrap gap-1.5">
-                {p.tags.map((t) => (
-                  <span key={t} className="rounded-full border border-line px-2.5 py-0.5 text-[11px] text-night/70 dark:border-white/15 dark:text-white/60">
-                    #{t}
+      {/* KARTLAR — her satırda 4, çerçevesiz, köşeler keskin, üstte görsel altta yazı */}
+      <div className="mx-auto max-w-7xl px-5 pb-16 pt-8">
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {posts.map((p, idx) => (
+            <Reveal key={p.id} direction="up" delay={(idx % 4) * 0.06} distance={40}>
+              <article className="flex h-full flex-col bg-white dark:bg-white/[0.06] shadow-[0_4px_24px_rgba(43,38,59,0.10)] dark:shadow-[0_4px_24px_rgba(0,0,0,0.35)] transition hover:shadow-[0_8px_32px_rgba(43,38,59,0.16)] hover:-translate-y-1">
+                {/* görsel alanı — random renk kutusu, çerçevesiz, radius yok */}
+                <div className={`h-[180px] w-full ${p.color} flex flex-col items-center justify-center relative`}>
+                  <span className="text-[11px] font-extrabold tracking-[0.15em] text-night/50">GÖRSEL ALANI</span>
+                  <span className="mt-1 text-xs font-bold text-night/70">{p.category}</span>
+                  <span className="absolute bottom-2 right-2 bg-night px-2 py-0.5 text-[10px] font-bold text-white">{p.color.replace("bg-","")}</span>
+                </div>
+                {/* yazı önizleme alanı — çerçeve yok, gölge kenar çizgisi gibi */}
+                <div className="flex flex-1 flex-col p-5">
+                  <span className="w-fit bg-ice dark:bg-white/10 px-2.5 py-1 text-[11px] font-extrabold uppercase tracking-wide text-night dark:text-white">
+                    {p.category}
                   </span>
-                ))}
-              </div>
-              <div className="mt-4 flex flex-col gap-1.5 border-t border-line pt-4 text-xs text-night/70 dark:border-white/10 dark:text-white/60">
-                <span>Tarih: {p.date}</span>
-                <span>Süre: {p.minutes} dk</span>
-                <span className="line-clamp-1">{p.author}</span>
-              </div>
-              <Link href="/blog" className="mt-3 inline-flex items-center gap-2 text-sm font-extrabold text-violet transition hover:gap-3 dark:text-lila">
-                Devamını Oku <span aria-hidden>→</span>
-              </Link>
-            </article>
+                  <h2 className="mt-3 line-clamp-2 text-[16px] font-extrabold leading-6 text-night dark:text-white">{p.title}</h2>
+                  <p className="mt-2 line-clamp-3 text-sm leading-6 text-night/70 dark:text-white/60">{p.excerpt}</p>
+
+                  {/* hashtag alanı */}
+                  <div className="mt-3 flex flex-wrap gap-1.5">
+                    {p.tags.map((t) => (
+                      <span key={t} className="bg-ice dark:bg-white/5 px-2 py-0.5 text-[11px] font-semibold text-night/70 dark:text-white/60">
+                        #{t}
+                      </span>
+                    ))}
+                  </div>
+
+                  {/* meta: okuma süresi, tarih, yazar */}
+                  <div className="mt-4 flex flex-col gap-1 border-t border-night/10 dark:border-white/10 pt-4 text-xs">
+                    <span className="font-semibold text-night/70 dark:text-white/60">Okuma: {p.minutes} dk</span>
+                    <span className="font-semibold text-night/70 dark:text-white/60">Tarih: {p.date}</span>
+                    <span className="font-bold text-night dark:text-white">Yazar: {p.author}</span>
+                  </div>
+
+                  <Link href="/blog" className="mt-3 inline-flex items-center gap-2 text-sm font-extrabold text-violet transition hover:gap-3 dark:text-lila">
+                    Devamını Oku <span aria-hidden>→</span>
+                  </Link>
+                </div>
+              </article>
+            </Reveal>
           ))}
         </div>
 
         {posts.length === 0 && (
-          <p className="mt-10 text-center text-sm text-night/60 dark:text-white/60">
-            Aramanla eşleşen içerik bulunamadı.
-          </p>
+          <p className="mt-10 text-center text-sm font-semibold text-night/60 dark:text-white/60">Aramanla eşleşen içerik bulunamadı.</p>
         )}
 
-        {/* sayfalama */}
-        <div className="mt-10 flex items-center justify-center gap-2">
-          <button type="button" onClick={() => go(1)} aria-label="İlk sayfa" className="flex h-10 w-10 items-center justify-center rounded-lg bg-white text-sm font-bold shadow-sm transition hover:bg-lila/50 dark:bg-white/10 dark:text-white">
-            «
-          </button>
-          <button type="button" onClick={() => go(safePage - 1)} aria-label="Önceki" className="flex h-10 w-10 items-center justify-center rounded-lg bg-white text-sm font-bold shadow-sm transition hover:bg-lila/50 dark:bg-white/10 dark:text-white">
-            ‹
-          </button>
-          {pageNums.map((n, i) =>
-            n === "…" ? (
-              <span key={`e${i}`} className="px-1 text-sm text-night/50 dark:text-white/50">…</span>
-            ) : (
-              <button
-                key={n}
-                type="button"
-                onClick={() => go(n)}
-                className={`h-10 w-10 rounded-lg text-sm font-bold shadow-sm transition ${
-                  n === safePage
-                    ? "bg-violet text-white"
-                    : "bg-white hover:bg-lila/50 dark:bg-white/10 dark:text-white"
-                }`}
-              >
-                {n}
-              </button>
-            )
-          )}
-          <button type="button" onClick={() => go(safePage + 1)} aria-label="Sonraki" className="flex h-10 w-10 items-center justify-center rounded-lg bg-white text-sm font-bold shadow-sm transition hover:bg-lila/50 dark:bg-white/10 dark:text-white">
-            ›
-          </button>
-          <button type="button" onClick={() => go(totalPages)} aria-label="Son sayfa" className="flex h-10 w-10 items-center justify-center rounded-lg bg-white text-sm font-bold shadow-sm transition hover:bg-lila/50 dark:bg-white/10 dark:text-white">
-            »
-          </button>
-        </div>
+        {/* sentinel — scrolldown ile GSAP'le gelme */}
+        <div ref={sentinelRef} className="h-6" />
+
+        {visible < filtered.length && (
+          <p className="mt-6 text-center text-xs font-semibold text-night/50 dark:text-white/50">Aşağı kaydırdıkça 12 içerik daha yükleniyor… ({visible}/{filtered.length})</p>
+        )}
       </div>
+
+      {/* yukarı ok — önce yavaş sonra hızlanarak */}
+      <button
+        type="button"
+        onClick={scrollToTop}
+        aria-label="Başa dön"
+        className={`fixed bottom-6 right-6 z-40 flex h-12 w-12 items-center justify-center bg-violet text-white shadow-[0_8px_24px_rgba(43,38,59,0.2)] transition-all duration-300 hover:bg-violet/90 ${showUp ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4 pointer-events-none"}`}
+      >
+        <UpIcon />
+      </button>
     </div>
   );
 }

@@ -15,6 +15,8 @@ export type StackItem = {
   color: string;
   cta?: string;
   href?: string;
+  spot?: string;
+  details?: string[];
 };
 
 export default function StackedCards({ items }: { items: StackItem[] }) {
@@ -89,19 +91,33 @@ export default function StackedCards({ items }: { items: StackItem[] }) {
               </div>
             </div>
             {/* right - metin */}
-            <div className="flex w-full items-center p-8 md:p-16">
+            <div className="flex w-full items-center p-6 md:p-12">
               <div className="mx-auto w-full max-w-2xl md:mx-0">
-                <h2 className="text-2xl font-extrabold tracking-tight md:text-4xl">
-                  {s.title}
-                </h2>
-                <p className="mt-4 leading-7 text-muted dark:text-white/60">{s.desc}</p>
-                <Link
-                  href={s.href ?? "/hizmetler"}
-                  className="mt-8 inline-flex w-fit items-center gap-3 rounded-lg bg-night px-6 py-3.5 text-sm font-bold text-white transition hover:-translate-y-0.5 dark:bg-violet"
-                >
-                  <span>{s.cta ?? "Keşfet"}</span>
-                  <span aria-hidden>→</span>
-                </Link>
+                <p className="text-xs font-extrabold tracking-[0.2em] text-violet">{s.tag}</p>
+                <h2 className="mt-2 text-xl font-extrabold tracking-tight md:text-2xl">{s.title}</h2>
+                {s.spot && <p className="mt-2 text-sm font-extrabold text-night dark:text-white">“{s.spot}”</p>}
+                <p className="mt-3 text-sm leading-7 text-muted dark:text-white/60">{s.desc}</p>
+                {s.details && (
+                  <ul className="mt-4 flex flex-col gap-1.5">
+                    {s.details.map((d) => (
+                      <li key={d} className="flex items-start gap-2 text-xs font-semibold leading-6 text-night dark:text-white">
+                        <span className="mt-1.5 h-1.5 w-1.5 shrink-0 bg-violet dark:bg-lila" />
+                        {d}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+                {s.cta && s.href ? (
+                  <Link
+                    href={s.href}
+                    className="group relative mt-6 inline-flex h-11 w-fit items-center justify-center overflow-hidden bg-night px-8 text-sm font-extrabold text-white transition hover:bg-violet dark:bg-white dark:text-night dark:hover:bg-violet dark:hover:text-white"
+                  >
+                    <span className="transition duration-200 group-hover:-translate-y-2 group-hover:opacity-0">{s.cta}</span>
+                    <span className="absolute inset-0 flex items-center justify-center text-xl opacity-0 transition duration-200 group-hover:opacity-100">→</span>
+                  </Link>
+                ) : s.cta ? (
+                  <span className="mt-6 inline-flex h-11 items-center bg-night px-8 text-sm font-extrabold text-white dark:bg-white dark:text-night">{s.cta}</span>
+                ) : null}
               </div>
             </div>
           </div>

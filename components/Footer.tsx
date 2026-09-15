@@ -1,15 +1,108 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
+import { useState } from "react";
 import LegalDocs from "@/components/LegalDocs";
 
-const offices = [
-  { city: "Yalova Ofis", addr: "Bahçelievler Mah. Gazi Paşa Cad. No:135/17 Merkez / YALOVA", tel: "+90 534 951 7555", href: "tel:+905349517555", wa: "https://wa.me/905349517555" },
-  { city: "İstanbul Ofis", addr: "İstasyon Yolu Sk. No: 3/1 34844 Maltepe / İSTANBUL", tel: "+90 542 404 9178", href: "tel:+905424049178", wa: "https://wa.me/905424049178" },
-  { city: "Bağdat Ofis", addr: "Baghdad, Al Kerrada, 10069, Irak", tel: "+964 770 798 7979", href: "tel:+9647707987979", wa: "https://wa.me/9647707987979" },
-  { city: "Bangkok Ofis", addr: "267/11 Sukhumvit, Watthana, Ekkamai, 10110", tel: "+66 82 705 6398", href: "tel:+66827056398", wa: "https://wa.me/66827056398" },
+const sitemap: { title: string; href: string; items: { label: string; href: string }[] }[] = [
+  {
+    title: "Web",
+    href: "/web",
+    items: [
+      { label: "Özel E-Ticaret Yazılımı", href: "/web/ozel-e-ticaret-yazilimi" },
+      { label: "Özel Web Yazılım Entegrasyonları", href: "/web/ozel-web-yazilim-entegrasyonlari" },
+      { label: "CRM Yazılımları", href: "/web/crm-yazilimlari" },
+      { label: "Kurumsal Web Tasarım", href: "/web/kurumsal-web-tasarim" },
+      { label: "Otel Web Tasarım", href: "/web/otel-web-tasarim" },
+      { label: "E-ticaret Web Tasarımı", href: "/web/e-ticaret-web-tasarimi" },
+      { label: "Mobil UI&UX Tasarımı", href: "/web/mobil-ui-ux-tasarimi" },
+      { label: "Mobil Yazılım Sistemleri", href: "/web/mobil-yazilim-sistemleri" },
+      { label: "Responsive UI & UX", href: "/web/responsive-ui-ux-tasarim" },
+    ],
+  },
+  {
+    title: "Prodüksiyon",
+    href: "/produksiyon",
+    items: [
+      { label: "Otel Fotoğraf Çekimi", href: "/produksiyon/otel-fotograf-cekimi" },
+      { label: "Yemek Fotoğraf Çekimi", href: "/produksiyon/yemek-fotograf-cekimi" },
+      { label: "Stüdyo Ürün Fotoğraf", href: "/produksiyon/studyo-urun-fotograf-cekimi" },
+      { label: "360° Panoramik Sanaltur", href: "/produksiyon/360-panoramik-sanaltur" },
+      { label: "Otel Tanıtım Filmi", href: "/produksiyon/otel-tanitim-filmi" },
+      { label: "Fabrika Tanıtım Filmi", href: "/produksiyon/fabrika-tanitim-filmi" },
+      { label: "Ürün Tanıtım Filmleri", href: "/produksiyon/urun-tanitim-filmleri" },
+      { label: "Drone Çekimi", href: "/produksiyon/drone-cekimi" },
+      { label: "AI Yapay Zeka Video", href: "/produksiyon/ai-yapay-zeka-video" },
+      { label: "Motion Design", href: "/produksiyon/motion-design" },
+      { label: "Sosyal Medya Video", href: "/produksiyon/sosyal-medya-video" },
+      { label: "UGC Video", href: "/produksiyon/ugc-video" },
+    ],
+  },
+  {
+    title: "Tasarım",
+    href: "/tasarim",
+    items: [
+      { label: "Logo Tasarımı", href: "/tasarim/logo-tasarimi" },
+      { label: "Kurumsal Kimlik", href: "/tasarim/kurumsal-kimlik-tasarimi" },
+      { label: "Katalog Tasarımı", href: "/tasarim/katalog-tasarimi" },
+      { label: "Rich Content Tasarım", href: "/tasarim/rich-content-tasarim" },
+      { label: "Fuar ve Stand", href: "/tasarim/fuar-stand-tasarimi" },
+      { label: "Ambalaj ve Etiket", href: "/tasarim/ambalaj-etiket-tasarimi" },
+      { label: "Sunum Tasarımı", href: "/tasarim/sunum-tasarimi" },
+      { label: "Banner Tasarımı", href: "/tasarim/banner-tasarimi" },
+      { label: "Sosyal Medya Tasarımı", href: "/tasarim/sosyal-medya-tasarimi" },
+      { label: "Portföy Katalog", href: "/tasarim/portfoy-katalog-tasarimi" },
+    ],
+  },
+  {
+    title: "Dijital Pazarlama",
+    href: "/dijital-pazarlama",
+    items: [
+      { label: "YouTube Reklamcılığı", href: "/dijital-pazarlama/youtube-reklamlari" },
+      { label: "Google Merchant Reklamları", href: "/dijital-pazarlama/google-merchant-reklamlari" },
+      { label: "Google Arama Reklamları", href: "/dijital-pazarlama/google-arama-reklamlari" },
+      { label: "Site İçi SEO", href: "/dijital-pazarlama/site-ici-seo" },
+      { label: "Site Dışı SEO", href: "/dijital-pazarlama/site-disi-seo" },
+      { label: "Teknik SEO", href: "/dijital-pazarlama/teknik-seo" },
+      { label: "Instagram Reklamları", href: "/dijital-pazarlama/instagram-reklamlari" },
+      { label: "Facebook Reklamları", href: "/dijital-pazarlama/facebook-reklamlari" },
+      { label: "X Reklamları", href: "/dijital-pazarlama/x-reklamlari" },
+      { label: "LinkedIn Reklamları", href: "/dijital-pazarlama/linkedin-reklamlari" },
+      { label: "Sosyal Medya Danışmanlığı", href: "/dijital-pazarlama/sosyal-medya-danismanligi" },
+      { label: "Sosyal Medya İçerik Planlama", href: "/dijital-pazarlama/sosyal-medya-icerik-planlama" },
+      { label: "Sosyal Medya Marka Strateji", href: "/dijital-pazarlama/sosyal-medya-marka-stratejisi" },
+    ],
+  },
+  {
+    title: "Projeler",
+    href: "/projeler",
+    items: [
+      { label: "Kurumsal Siteler", href: "/projeler/kurumsal-siteler" },
+      { label: "E-Ticaret Siteleri", href: "/projeler/e-ticaret-siteleri" },
+      { label: "Landing Pageler", href: "/projeler/landing-pageler" },
+      { label: "Logo & Kurumsal Kimlik", href: "/projeler/logo-kurumsal-kimlik" },
+      { label: "Katalog & Sunum", href: "/projeler/katalog-sunum" },
+      { label: "Sosyal Medya", href: "/projeler/sosyal-medya" },
+      { label: "Tanıtım Filmleri", href: "/projeler/tanitim-filmleri" },
+      { label: "Drone Çekimleri", href: "/projeler/drone-cekimleri" },
+      { label: "Sosyal Medya Videoları", href: "/projeler/sosyal-medya-videolari" },
+    ],
+  },
+  {
+    title: "Kısaca Biz",
+    href: "/kisaca-biz",
+    items: [
+      { label: "Bizi Tanıyın", href: "/kisaca-biz/bizi-taniyin" },
+      { label: "Markalar", href: "/kisaca-biz/markalar" },
+      { label: "Açık Pozisyonlar", href: "/kisaca-biz/acik-pozisyonlar" },
+      { label: "Staj & Gelişim", href: "/kisaca-biz/staj-gelisim" },
+      { label: "SSS", href: "/sss" },
+      { label: "Blog", href: "/blog" },
+      { label: "İletişim", href: "/iletisim" },
+    ],
+  },
 ];
-
-
 
 const partners = [
   { src: "/google-partner-logo.webp", alt: "Google Partner" },
@@ -21,130 +114,104 @@ const partners = [
   { src: "/campaign-logo-siyah-1.png.webp", alt: "Campaign", mono: true },
 ];
 
-function PinIcon() {
-  return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
-      <path d="M12 2a7.5 7.5 0 0 0-7.5 7.5c0 5.6 7.5 12.5 7.5 12.5s7.5-6.9 7.5-12.5A7.5 7.5 0 0 0 12 2Zm0 10.2a2.7 2.7 0 1 1 0-5.4 2.7 2.7 0 0 1 0 5.4Z" />
-    </svg>
-  );
-}
-
-function TelIcon() {
-  return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
-      <path d="M5 4h4l2 5-2.5 1.5a12 12 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2Z" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
-function WhatsAppIcon() {
-  return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
-      <path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 2a8 8 0 1 1-4.1 14.9l-.3-.2-2.9.8.8-2.8-.2-.3A8 8 0 0 1 12 4Zm-3.2 3.9c-.2 0-.4 0-.6.2-.2.2-.8.8-.8 1.9s.8 2.2.9 2.4c.1.2 1.6 2.6 4 3.5 2 .8 2.4.6 2.9.6.4-.1 1.4-.6 1.6-1.1.2-.6.2-1 .1-1.1 0-.1-.3-.2-.6-.3l-1.9-.9c-.3-.1-.5-.2-.7 0l-.9 1c-.2.2-.3.2-.6.1a7.6 7.6 0 0 1-2.2-1.4 8.2 8.2 0 0 1-1.5-1.9c-.2-.3 0-.4.1-.6l.4-.5c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5L8.6 8c-.1-.3-.4-.1-.8-.1Z" />
-    </svg>
-  );
-}
-
 export default function Footer() {
+  const [email, setEmail] = useState("");
+  const [sent, setSent] = useState(false);
+  const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
+
   return (
-    <footer className="mt-20 w-full border-t border-line bg-ice text-night dark:border-white/10 dark:bg-night dark:text-white">
-      <div className="container mx-auto max-w-6xl px-5">
-        {/* top — sadece takip */}
-        <div className="top flex justify-end border-b border-night/10 py-8 dark:border-white/10">
-          <div className="text-footer flex items-center gap-3">
-            <span className="text-xs font-extrabold uppercase tracking-[0.2em] text-night/60 dark:text-white/60">
+    <footer className="mt-12 w-full bg-ice dark:bg-night text-night dark:text-white">
+      <div className="mx-auto max-w-7xl px-5">
+        {/* 1 — BİZİ TAKİP EDİN — sola yaslı, SOSYAL ile aynı hizadan, çizgiden biraz yukarı */}
+        <div className="relative overflow-hidden h-[40px] md:h-[56px] lg:h-[70px] mt-6">
+          <div className="absolute inset-x-0 top-1/2 h-px bg-night/10 dark:bg-white/15" />
+          <div className="absolute inset-x-0 top-0 h-1/2 overflow-hidden flex justify-start">
+            <h2 className=" -translate-y-4 text-left text-[38px] font-extrabold leading-none tracking-tight text-night/[0.07] dark:text-white/[0.09] md:text-[62px] lg:text-[84px]">
               bizi takip edin
-            </span>
-            <span className="flex gap-2">
-              <a
-                href="https://www.linkedin.com/company/adastra-b2b/"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="LinkedIn"
-                className="flex h-9 w-9 items-center justify-center rounded-full bg-night/5 text-xs font-bold transition hover:bg-violet hover:text-white dark:bg-white/10 dark:hover:bg-violet"
-              >
-                in
-              </a>
-              <a
-                href="https://www.instagram.com/ad_astra_agency_/"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Instagram"
-                className="flex h-9 w-9 items-center justify-center rounded-full bg-night/5 text-xs font-bold transition hover:bg-violet hover:text-white dark:bg-white/10 dark:hover:bg-violet"
-              >
-                ig
-              </a>
-            </span>
+            </h2>
           </div>
         </div>
 
-        {/* mid - ofisler: şeffaf zemin + dikdörtgen çerçeve */}
-        <div className="mid py-10">
-          <div className="flex-in grid gap-6 sm:grid-cols-2">
-            {offices.map((o) => (
-              <div key={o.city} className="item-out">
-                <div className="item border-2 border-night/25 p-6 dark:border-white/25">
-                  <div className="title-footer flex items-center gap-2 text-base font-extrabold text-violet dark:text-lila">
-                    <PinIcon />
-                    {o.city}
-                  </div>
-                  <div className="desc-footer mt-3 min-h-[48px] text-sm leading-6 text-night/80 dark:text-white/70">
-                    {o.addr}
-                  </div>
-                  <div className="tel-footer mt-4 flex items-center gap-3">
-                    <a href={o.href} className="inline-flex items-center gap-2 text-sm font-extrabold text-night transition hover:text-violet dark:text-white dark:hover:text-lila">
-                      <span className="text-night/40 dark:text-white/40">
-                        <TelIcon />
-                      </span>
-                      {o.tel}
-                    </a>
-                    <a
-                      href={o.wa}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={`${o.city} WhatsApp`}
-                      className="flex h-8 w-8 items-center justify-center rounded-full bg-[#25D366] text-white transition hover:scale-110"
-                    >
-                      <WhatsAppIcon />
-                    </a>
-                  </div>
-                </div>
-              </div>
-            ))}
+        {/* 2 — takip butonları ve bülten aboneliği BİR SATIR */}
+        <div className="grid gap-4 py-5 md:grid-cols-[1fr_420px] md:items-center">
+          <div className="flex items-center gap-3">
+            <span className="hidden text-xs font-extrabold uppercase tracking-[0.15em] text-night/50 dark:text-white/50 md:block">Sosyal</span>
+            <a href="https://www.linkedin.com/company/adastra-b2b/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="flex h-10 w-10 items-center justify-center bg-white text-night transition hover:bg-violet hover:text-white dark:bg-white dark:text-night dark:hover:bg-violet dark:hover:text-white">
+              <span className="text-sm font-extrabold">in</span>
+            </a>
+            <a href="https://www.instagram.com/ad_astra_agency_/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="flex h-10 w-10 items-center justify-center bg-lila text-night transition hover:bg-violet hover:text-white dark:bg-lila dark:text-night dark:hover:bg-violet dark:hover:text-white">
+              <span className="text-sm font-extrabold">ig</span>
+            </a>
+            <a href="https://wa.me/905349517555" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" className="flex h-10 w-10 items-center justify-center bg-night text-white transition hover:bg-mint hover:text-night dark:bg-white/10 dark:text-white dark:hover:bg-mint dark:hover:text-night">
+              <span className="text-xs font-extrabold">wa</span>
+            </a>
           </div>
-        </div>
 
-        {/* mid-term-partner */}
-        <div className="mid-term-partner border-t border-night/10 py-8 dark:border-white/10">
-          <div className="all-partner flex flex-wrap items-center justify-center gap-x-10 gap-y-6">
-            {partners.map((p) => (
-              <Link
-                key={p.src}
-                href="/iletisim"
-                className="partnerler flex items-center transition"
-              >
-                <Image
-                  src={p.src}
-                  alt={p.alt}
-                  width={140}
-                  height={40}
-                  className={
-                    "mono" in p && p.mono
-                      ? "partnerler-img h-8 w-auto object-contain opacity-60 brightness-0 transition duration-300 hover:opacity-100 dark:invert"
-                      : "partnerler-img h-8 w-auto object-contain opacity-60 grayscale transition duration-300 hover:opacity-100 hover:grayscale-0 dark:brightness-0 dark:invert dark:hover:brightness-100 dark:hover:invert-0"
-                  }
-                />
+          {/* bülten — tek satır, çerçevesiz, köşeli, palette, koyu/açık uyumlu */}
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              if (!valid) return;
+              setSent(true);
+              setTimeout(() => setSent(false), 3000);
+              setEmail("");
+            }}
+            className="flex h-10 gap-2"
+          >
+            <input
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="E-posta adresin"
+              type="email"
+              className="h-10 flex-1 bg-white px-4 text-sm font-semibold text-night placeholder:text-night/40 outline-none focus:bg-ice dark:bg-white/5 dark:text-white dark:placeholder:text-white/40 dark:focus:bg-white/10"
+            />
+            <button type="submit" disabled={!valid} className={`h-10 px-6 text-sm font-extrabold transition ${valid ? "bg-night text-white hover:bg-violet hover:text-white dark:bg-white dark:text-night dark:hover:bg-violet dark:hover:text-white" : "cursor-not-allowed bg-night/10 text-night/30 dark:bg-white/10 dark:text-white/30"}`}>
+              {sent ? "✓" : "Gönder"}
+            </button>
+          </form>
+        </div>
+        {sent && <p className="pb-3 text-right text-xs font-bold text-violet dark:text-lila md:-mt-2">Teşekkürler — bültene eklendin.</p>}
+
+        {/* 3 — site haritası — hemen altında */}
+        <div className="grid gap-6 py-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
+          {sitemap.map((col) => (
+            <div key={col.title}>
+              <Link href={col.href} className="text-sm font-extrabold text-night transition hover:text-violet dark:text-white dark:hover:text-lila">
+                {col.title}
               </Link>
-            ))}
-          </div>
+              <ul className="mt-2 flex flex-col gap-1.5">
+                {col.items.map((it) => (
+                  <li key={it.href}>
+                    <Link href={it.href} className="text-xs font-semibold leading-5 text-night/60 transition hover:text-violet dark:text-white/60 dark:hover:text-lila">
+                      {it.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
-      </div>
 
-      <div className="flex flex-col items-center gap-3 border-t border-night/10 py-6 dark:border-white/10">
-        <p className="text-xs text-night/50 dark:text-white/50">
-          © 2026 Adastra Ajans — Tüm hakları saklıdır.
-        </p>
-        <LegalDocs />
+        {/* 4 — partner logoları — hemen altında */}
+        <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-4 py-5">
+          {partners.map((p) => (
+            <Link key={p.src} href="/iletisim" className="flex items-center transition">
+              <Image
+                src={p.src}
+                alt={p.alt}
+                width={130}
+                height={36}
+                className="h-7 w-auto object-contain opacity-60 grayscale transition duration-300 hover:opacity-100 hover:grayscale-0 dark:opacity-60 dark:grayscale dark:brightness-0 dark:invert dark:hover:opacity-100 dark:hover:grayscale-0 dark:hover:brightness-0 dark:hover:invert"
+              />
+            </Link>
+          ))}
+        </div>
+
+        {/* 5 — en altta yasal belgeler ve sss, en sonda telif */}
+        <div className="flex flex-col items-center gap-2 py-4">
+          <LegalDocs />
+          <p className="text-xs text-night/40 dark:text-white/30">© 2026 Adastra Ajans — Tüm hakları saklıdır.</p>
+        </div>
       </div>
     </footer>
   );
