@@ -227,7 +227,13 @@ export default function Page() {
     phone.trim().replace(/\D/g, "").length >= 10;
 
   return (
-    <div className="pt-28 md:pt-24">
+    <div className="relative pt-28 md:pt-24">
+      {/* arka plan — renkli kalemler, düşük opaklıkta deneme */}
+      <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden" aria-hidden>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/hero-image/iletisim-hero.webp" alt="" className="h-full w-full object-cover object-center opacity-[0.24] dark:opacity-[0.22]" draggable={false} />
+        <div className="absolute inset-0 bg-gradient-to-b from-ice/60 via-ice/40 to-ice dark:from-night/60 dark:via-night/40 dark:to-night" />
+      </div>
       <div className="mx-auto max-w-7xl px-5">
         <Reveal direction="up">
           <h1 className="text-4xl font-extrabold tracking-tight">İletişim</h1>

@@ -86,12 +86,12 @@ export default function CustomerReviews() {
         <img
           src="/hero-image/customer.webp"
           alt="Müşteri yorumları arka plan"
-          className="absolute inset-0 h-full w-full object-cover object-center grayscale"
+          className="absolute inset-0 h-full w-full object-cover object-center"
           draggable={false}
         />
-        {/* hafif karartma + vignette */}
-        <div className="absolute inset-0 bg-black/20" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
+        {/* çok hafif karartma — renkler daha belirgin */}
+        <div className="absolute inset-0 bg-black/10" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
 
         {/* yorum şeridi — görselin orta-altına hizalı, %10 yukarı kaydırıldı */}
         <div

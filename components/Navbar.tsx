@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ThemeToggle from "@/components/ThemeToggle";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 
@@ -332,6 +332,7 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const lastY = useRef(0);
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect -- route değişiminde menüyü kapatmak için senkron reset gerekli
@@ -339,22 +340,16 @@ export default function Navbar() {
     setMobileOpen(false);
   }, [pathname]);
 
-  // yeni kural: sadece en tepede görün, aşağı kayınca smooth gizle, tepeye dönene kadar gizli kal
   useEffect(() => {
+    lastY.current = window.scrollY;
     const onScroll = () => {
       const y = window.scrollY;
       setScrolled(y > 40);
       setOpenMenu(null);
       setMobileOpen(false);
-      if (openMenu || mobileOpen) {
-        setHidden(false);
-        return;
-      }
-      // header yalnızca y <= 10 iken görünsün, aşağı inince gizlensin; scrollUp'ta geri gelmesin
-      setHidden(y > 10);
+      if (!openMenu && !mobileOpen) setHidden(y > lastY.current && y > 200);
+      lastY.current = y;
     };
-    // ilk yüklemede de kontrol
-    onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, [openMenu, mobileOpen]);
@@ -578,16 +573,18 @@ export default function Navbar() {
           {openMenu === "/kisaca-biz" && (
             <div className="mx-auto grid max-w-[1920px] grid-cols-[1fr_1fr_420px] gap-10 px-12 py-12 xl:px-20">
               <MegaCols cols={kisacaBizMenu} baseHref="/kisaca-biz" onNavigate={close} />
-              {/* sağ referans alanı */}
-              <div className="bg-mint/50 p-8 dark:bg-white/5">
-                <p className="border-b border-night/10 pb-4 text-sm font-semibold text-night dark:border-white/10 dark:text-white">
-                  Per Aspera Ad Astra
-                </p>
-                <div className="mt-6 flex min-h-[220px] items-center justify-center p-8 text-center">
-                  <p className="text-sm font-semibold text-night/60 dark:text-white/60">
-                    Ekip görseli — içerik sonra eklenecek.
-                  </p>
-                </div>
+              {/* sağ ekip görseli — ourteam.webp 1536x1024, çerçevesiz, tıklanamaz */}
+              <div
+                className="relative select-none overflow-hidden"
+                onContextMenu={(e) => e.preventDefault()}
+                onDragStart={(e) => e.preventDefault()}
+              >
+                <div
+                  className="pointer-events-none h-[320px] w-full select-none bg-cover bg-center"
+                  style={{ backgroundImage: "url('/hero-image/ourteam.webp')" }}
+                  aria-hidden
+                />
+                <div className="absolute inset-0" onContextMenu={(e) => e.preventDefault()} onDragStart={(e) => e.preventDefault()} aria-hidden />
               </div>
             </div>
           )}

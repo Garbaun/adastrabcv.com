@@ -59,16 +59,10 @@ const webGroups = [
 export default function Page() {
   return (
     <div className="w-full">
-      {/* HERO — 1920x600 renkli alan (görsel sonra eklenecek) */}
-      <section className="w-full max-w-[1920px] mx-auto h-[420px] md:h-[600px] flex items-center justify-center bg-gradient-to-br from-violet via-lila to-baby dark:from-night dark:via-violet/30 dark:to-night relative overflow-hidden">
-        {/* renk kutusu placeholder deseni */}
-        <div className="absolute inset-0 opacity-20" style={{ backgroundImage: "radial-gradient(circle at 2px 2px, #2B263B 1px, transparent 0)", backgroundSize: "24px 24px" }} />
-        <div className="relative text-center px-5">
-          <p className="text-xs font-extrabold tracking-[0.25em] text-white/80">1920×600 — HERO</p>
-          <h1 className="mt-3 text-4xl md:text-6xl font-extrabold tracking-tight text-white">Web</h1>
-          <p className="mt-3 text-sm md:text-base font-semibold text-white/80">Prestij odaklı web & UI/UX — hero görseli için ayrılan renkli alan</p>
-          <p className="mt-2 inline-block rounded-full bg-white/20 px-4 py-1 text-xs font-bold text-white backdrop-blur">Görsel sonra eklenecek — 1920×600</p>
-        </div>
+      {/* HERO — web-hero.webp */}
+      <section className="relative w-full max-w-[1920px] mx-auto h-[420px] md:h-[600px] overflow-hidden">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/hero-image/web-hero.webp" alt="Web — World Wide Web" className="absolute inset-0 h-full w-full object-cover object-center" draggable={false} />
       </section>
 
       {/* ALT MENÜ / KARTLAR — hero altından GSAP ile gelen, header'daki gibi listelenen */}
@@ -119,12 +113,7 @@ export default function Page() {
         })}
       </div>
 
-      {/* ALT BİLGİ — aynı stil devam edecek notu */}
-      <div className="w-full max-w-[1920px] mx-auto bg-ice dark:bg-white/5 px-6 md:px-16 py-6 text-center">
-        <p className="text-xs font-semibold tracking-wide text-night/50 dark:text-white/50">
-          Tüm kartlar 1920×600 — çerçevesiz — bir taraf renk kutusu / bir taraf alt başlıklar — başlıklar altındaki sayfalarda aynı sistem devam edecek
-        </p>
-      </div>
+
     </div>
   );
 }
