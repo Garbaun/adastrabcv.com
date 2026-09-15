@@ -170,6 +170,7 @@ export default function Page() {
 
   // query değişince başa dön
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- query değişiminde liste başına dönmek için gerekli
     setVisible(12);
   }, [query]);
 
@@ -247,7 +248,7 @@ export default function Page() {
             )}
           </div>
           <p className="mt-3 text-xs font-semibold text-night/60 dark:text-white/60">
-            {filtered.length} içerik bulundu · {posts.length} gösteriliyor · Tarihler 15.09.2026'dan geriye doğru
+            {filtered.length} içerik bulundu · {posts.length} gösteriliyor · Tarihler 15.09.2026&apos;dan geriye doğru
           </p>
         </div>
       </section>

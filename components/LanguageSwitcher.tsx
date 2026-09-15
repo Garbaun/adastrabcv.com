@@ -27,6 +27,7 @@ export default function LanguageSwitcher({ overlay }: { overlay?: boolean }) {
   useEffect(() => {
     const saved = localStorage.getItem("adastra-lang") as LangCode | null;
     const initial = saved && LANGS.some((l) => l.code === saved) ? saved : "tr";
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- hydrate persisted lang on mount
     setLang(initial);
     document.documentElement.lang = initial;
     document.documentElement.dir = initial === "ar" ? "rtl" : "ltr";
@@ -43,7 +44,9 @@ export default function LanguageSwitcher({ overlay }: { overlay?: boolean }) {
   const select = (code: LangCode) => {
     setLang(code);
     localStorage.setItem("adastra-lang", code);
+    // eslint-disable-next-line react-hooks/immutability -- user action must update document lang/dir
     document.documentElement.lang = code;
+    // eslint-disable-next-line react-hooks/immutability -- user action must update document lang/dir
     document.documentElement.dir = code === "ar" ? "rtl" : "ltr";
     setOpen(false);
   };

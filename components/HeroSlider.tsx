@@ -36,6 +36,7 @@ export default function HeroSlider() {
       {/* 2540x1200 — görseller üstten/alttan kırpılmadan birebir */}
       <div className="relative aspect-[2540/1200] w-full overflow-hidden">
         {slides.map((src, i) => (
+          // eslint-disable-next-line @next/next/no-img-element -- slider stack needs raw <img> for absolute opacity crossfade
           <img
             key={src}
             src={src}

@@ -192,16 +192,16 @@ export default function Footer() {
           ))}
         </div>
 
-        {/* 4 — partner logoları — hemen altında */}
+        {/* 4 — partner logoları — %20 büyütüldü — hemen altında */}
         <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-4 py-5">
           {partners.map((p) => (
             <Link key={p.src} href="/iletisim" className="flex items-center transition">
               <Image
                 src={p.src}
                 alt={p.alt}
-                width={130}
-                height={36}
-                className="h-7 w-auto object-contain opacity-60 grayscale transition duration-300 hover:opacity-100 hover:grayscale-0 dark:opacity-60 dark:grayscale dark:brightness-0 dark:invert dark:hover:opacity-100 dark:hover:grayscale-0 dark:hover:brightness-0 dark:hover:invert"
+                width={156}
+                height={43}
+                className="h-[34px] w-auto object-contain opacity-60 grayscale transition duration-300 hover:opacity-100 hover:grayscale-0 dark:opacity-60 dark:grayscale dark:brightness-0 dark:invert dark:hover:opacity-100 dark:hover:grayscale-0 dark:hover:brightness-0 dark:hover:invert"
               />
             </Link>
           ))}

@@ -26,6 +26,7 @@ export default function ThemeToggle() {
     const stored = localStorage.getItem("adastra-theme");
     const prefers = window.matchMedia("(prefers-color-scheme: dark)").matches;
     const isDark = stored ? stored === "dark" : prefers;
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- hydrate persisted theme on mount
     setDark(isDark);
     document.documentElement.classList.toggle("dark", isDark);
   }, []);

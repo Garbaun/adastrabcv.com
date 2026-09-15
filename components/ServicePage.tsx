@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Reveal from "@/components/Reveal";
-import { baseBullets, type ServiceEntry } from "@/lib/service-pages";
+import { baseBullets, serviceData, type ServiceEntry } from "@/lib/service-pages";
 import { serviceFaqs, sssByCategory } from "@/lib/faqs";
 import FaqAccordion from "@/components/FaqAccordion";
 
@@ -31,8 +31,6 @@ export default function ServicePage({ entry, siblings }: Props) {
   const bullets = baseBullets[entry.base] ?? [];
   const grad = heroGradient[entry.base] ?? "from-violet via-lila to-baby";
   const imgBg = imageBgByBase[entry.base] ?? "bg-violet";
-  // SSS lookup: serviceData key üzerinden bul
-  const { serviceData } = require("@/lib/service-pages") as { serviceData: Record<string, typeof entry> };
   const slugKey = Object.keys(serviceData).find((k) => serviceData[k].title === entry.title && serviceData[k].base === entry.base) ?? "";
   const specific = serviceFaqs[slugKey] ?? [];
   const faqs = specific.length ? specific : (sssByCategory[entry.parent] ?? []);
