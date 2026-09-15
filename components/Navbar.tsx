@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import ThemeToggle from "@/components/ThemeToggle";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 
@@ -332,7 +332,6 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const lastY = useRef(0);
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect -- route değişiminde menüyü kapatmak için senkron reset gerekli
@@ -340,17 +339,22 @@ export default function Navbar() {
     setMobileOpen(false);
   }, [pathname]);
 
-  // scroll takibi: aşağı inince gizle, yukarı çıkınca göster, menü açıksa kapat
+  // yeni kural: sadece en tepede görün, aşağı kayınca smooth gizle, tepeye dönene kadar gizli kal
   useEffect(() => {
-    lastY.current = window.scrollY;
     const onScroll = () => {
       const y = window.scrollY;
       setScrolled(y > 40);
       setOpenMenu(null);
       setMobileOpen(false);
-      if (!openMenu && !mobileOpen) setHidden(y > lastY.current && y > 200);
-      lastY.current = y;
+      if (openMenu || mobileOpen) {
+        setHidden(false);
+        return;
+      }
+      // header yalnızca y <= 10 iken görünsün, aşağı inince gizlensin; scrollUp'ta geri gelmesin
+      setHidden(y > 10);
     };
+    // ilk yüklemede de kontrol
+    onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, [openMenu, mobileOpen]);

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Reveal from "@/components/Reveal";
 import HeroSlider from "@/components/HeroSlider";
 import StackedCards from "@/components/StackedCards";
@@ -117,6 +117,70 @@ const homeBlogPosts = [
   },
 ];
 
+function AnimatedNumber({ target, active }: { target: number; active: boolean }) {
+  const [val, setVal] = useState(0);
+  useEffect(() => {
+    if (!active) return;
+    let raf = 0;
+    const start = performance.now();
+    const duration = 3200;
+    const tick = (now: number) => {
+      const p = Math.min((now - start) / duration, 1);
+      // easeOutExpo — sonda iyice yavaşlasın
+      const eased = p === 1 ? 1 : 1 - Math.pow(2, -10 * p);
+      setVal(Math.round(eased * target));
+      if (p < 1) raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [target, active]);
+  return <>{val}</>;
+}
+
+function StatsSection() {
+  const [active, setActive] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) setActive(true); }, { threshold: 0.25 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+  const items = [
+    { value: 10, label: "Yıllık Tecrübe", desc: "Uzun yıllara dayanan deneyimimizle, markanız için heyecan aramayın. Deneyimlerimizden yararlanın." },
+    { value: 250, label: "'den Fazla Proje", desc: "Sektörün önde gelen markalarıyla yürüttüğümüz projelerle, onların hikayelerine değer kattık ve güçlü bir marka kimliği oluşturmalarına destek olduk." },
+    { value: 150, label: "'den Fazla Mutlu Müşteri", desc: "Her adımda daha fazla mutlu müşteri yaratmak için çalışıyoruz." },
+  ];
+  return (
+    <section ref={ref} className="relative isolate w-full overflow-hidden bg-[#F7F7F8] dark:bg-night">
+      <div className="mx-auto flex min-h-[620px] max-w-7xl flex-col justify-center px-5 py-12 md:min-h-[720px] md:py-16 lg:aspect-[16/9] lg:min-h-[760px] lg:py-10">
+        <Reveal direction="up">
+          <h2 className="text-center text-[48px] font-extrabold leading-none tracking-tight text-night dark:text-white md:text-[64px] lg:text-[76px]">
+            <span className="font-extrabold">Tırmanılan</span>
+            <br />
+            <span className="font-light">Basamaklar</span>
+          </h2>
+        </Reveal>
+        <div className="mt-14 grid gap-0 divide-y divide-night/10 dark:divide-white/10 md:grid-cols-3 md:divide-x md:divide-y-0">
+          {items.map((it) => (
+            <div key={it.label} className="flex flex-col items-center px-6 py-10 text-center md:px-8 md:py-10 lg:px-10">
+              <div className="flex items-start justify-center gap-2">
+                <span className="text-[80px] font-black leading-none tracking-tighter text-night dark:text-white md:text-[96px] lg:text-[110px]">
+                  <AnimatedNumber target={it.value} active={active} />
+                </span>
+                <span className="mt-3 text-[30px] font-light leading-none text-night dark:text-white md:text-[38px] lg:text-[42px]">+</span>
+              </div>
+              <p className="mt-8 text-[17px] font-bold leading-6 text-night dark:text-white md:text-[18px]">{it.label}</p>
+              <p className="mt-3 max-w-[360px] text-[14px] leading-7 text-night/60 dark:text-white/60 md:text-[15px]">{it.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
 function HomeFaqList() {
   const [open, setOpen] = useState<number | null>(null);
   return (
@@ -178,6 +242,9 @@ export default function Home() {
           }))}
         />
       </section>
+
+      {/* TIRMANILAN BASAMAKLAR — stacked ile blog arasına, animasyonlu sayaçlar */}
+      <StatsSection />
 
       {/* MÜŞTERİ YORUMLARI — 16:9 customer.webp, orta-alt hizalı, sağdan-sola marquee */}
       <CustomerReviews />

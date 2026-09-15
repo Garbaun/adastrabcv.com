@@ -132,18 +132,34 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* 2 — takip butonları ve bülten aboneliği BİR SATIR */}
+        {/* 2 — takip butonları ve bülten aboneliği BİR SATIR — görseldeki gibi sade ikonlar */}
         <div className="grid gap-4 py-5 md:grid-cols-[1fr_420px] md:items-center">
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-5">
             <span className="hidden text-xs font-extrabold uppercase tracking-[0.15em] text-night/50 dark:text-white/50 md:block">Sosyal</span>
-            <a href="https://www.linkedin.com/company/adastra-b2b/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="flex h-10 w-10 items-center justify-center bg-white text-night transition hover:bg-violet hover:text-white dark:bg-white dark:text-night dark:hover:bg-violet dark:hover:text-white">
-              <span className="text-sm font-extrabold">in</span>
+            <a href="https://www.facebook.com/adastrabcv" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="flex h-10 w-10 items-center justify-center text-night/70 transition hover:text-violet dark:text-white/70 dark:hover:text-lila">
+              <svg width="11" height="20" viewBox="0 0 11 20" fill="none" aria-hidden>
+                <path d="M7 20V11H9.5L10 8H7V6c0-.8.4-1.5 1.5-1.5H10V1.8C10 1.8 8.9 1.5 7.8 1.5 5.4 1.5 4 3 4 5.6V8H1v3h3v9h3z" fill="currentColor" />
+              </svg>
             </a>
-            <a href="https://www.instagram.com/ad_astra_agency_/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="flex h-10 w-10 items-center justify-center bg-lila text-night transition hover:bg-violet hover:text-white dark:bg-lila dark:text-night dark:hover:bg-violet dark:hover:text-white">
-              <span className="text-sm font-extrabold">ig</span>
+            <a href="https://www.instagram.com/ad_astra_agency_/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="flex h-10 w-10 items-center justify-center text-night/70 transition hover:text-violet dark:text-white/70 dark:hover:text-lila">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden>
+                <rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" strokeWidth="1.7" />
+                <circle cx="12" cy="12" r="4.2" stroke="currentColor" strokeWidth="1.7" />
+                <circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" />
+              </svg>
             </a>
-            <a href="https://wa.me/905349517555" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" className="flex h-10 w-10 items-center justify-center bg-night text-white transition hover:bg-mint hover:text-night dark:bg-white/10 dark:text-white dark:hover:bg-mint dark:hover:text-night">
-              <span className="text-xs font-extrabold">wa</span>
+            <a href="https://www.youtube.com/@adastrabcv" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="flex h-10 w-10 items-center justify-center text-night/70 transition hover:text-violet dark:text-white/70 dark:hover:text-lila">
+              <svg width="22" height="16" viewBox="0 0 22 16" fill="none" aria-hidden>
+                <path d="M21 8c0 2.2-.2 3.7-.6 4.5-.2.4-.5.8-.9 1-.4.2-1.2.4-2.4.6-1.2.2-2.7.3-4.6.3H9.5c-1.9 0-3.4-.1-4.6-.3-1.2-.2-2-.4-2.4-.6-.4-.2-.7-.6-.9-1C1.2 11.7 1 10.2 1 8s.2-3.7.6-4.5c.2-.4.5-.8.9-1 .4-.2 1.2-.4 2.4-.6C6.1 1.7 7.6 1.6 9.5 1.6h3c1.9 0 3.4.1 4.6.3 1.2.2 2 .4 2.4.6.4.2.7.6.9 1 .4.8.6 2.3.6 4.5z" stroke="currentColor" strokeWidth="1.4" />
+                <path d="M9.2 11.2L14.2 8 9.2 4.8V11.2Z" fill="currentColor" />
+              </svg>
+            </a>
+            <a href="https://www.linkedin.com/company/adastra-b2b/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="flex h-10 w-10 items-center justify-center text-night/70 transition hover:text-violet dark:text-white/70 dark:hover:text-lila">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden>
+                <path d="M2.2 6.2H5V16H2.2V6.2Z" fill="currentColor" />
+                <path d="M3.6 4.8A1.6 1.6 0 1 0 3.6 1.6a1.6 1.6 0 0 0 0 3.2Z" fill="currentColor" />
+                <path d="M7 6.2H9.6V7.6H9.7C10.1 6.8 11 5.8 12.5 5.8 15.2 5.8 16 7.4 16 10.1V16H13.2V10.7c0-1.2 0-2.7-1.7-2.7-1.7 0-2 1.2-2 2.6V16H6.9V6.2H7Z" fill="currentColor" />
+              </svg>
             </a>
           </div>
 

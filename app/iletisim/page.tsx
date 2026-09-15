@@ -233,77 +233,11 @@ export default function Page() {
           <h1 className="text-4xl font-extrabold tracking-tight">İletişim</h1>
         </Reveal>
 
-        {/* ofis kartları + altlarında ortalı konum pinleri */}
-        <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {offices.map((o, i) => {
-            const Icon = icons[o.icon];
-            const isActive = i === active;
-            return (
-              <div key={o.name} className="flex h-full flex-col items-center">
-                <Reveal direction="up" delay={i * 0.08} className="h-full w-full">
-                  <button
-                    type="button"
-                    onClick={() => setActive(i)}
-                    className={`flex h-full w-full flex-col items-center bg-white p-6 text-center shadow-[0_4px_24px_rgba(43,38,59,0.10)] dark:bg-white/[0.06] dark:shadow-[0_4px_24px_rgba(0,0,0,0.35)] transition hover:-translate-y-1 hover:shadow-[0_8px_32px_rgba(43,38,59,0.16)] dark:hover:shadow-[0_8px_32px_rgba(0,0,0,0.45)] ${
-                      isActive ? "ring-2 ring-violet dark:ring-lila" : ""
-                    }`}
-                  >
-                    <span className="text-night dark:text-white">
-                      <Icon />
-                    </span>
-                    <p className="mt-4 text-base font-extrabold">{o.name}</p>
-                    {o.addr.map((line) => (
-                      <p key={line} className="mt-1 text-xs leading-5 text-night/70 dark:text-white/60">
-                        {line}
-                      </p>
-                    ))}
-                    <a
-                      href={`mailto:${EMAIL}`}
-                      onClick={(e) => e.stopPropagation()}
-                      className="mt-2 text-xs text-night/70 transition hover:text-violet dark:text-white/60 dark:hover:text-lila"
-                    >
-                      {EMAIL}
-                    </a>
-                    <a
-                      href={o.telHref}
-                      onClick={(e) => e.stopPropagation()}
-                      className="mt-1 text-xs font-extrabold transition hover:text-violet dark:hover:text-lila"
-                    >
-                      {o.tel}
-                    </a>
-                  </button>
-                </Reveal>
-                <button
-                  type="button"
-                  onClick={() => setActive(i)}
-                  aria-label={`${o.name} konumunu göster`}
-                  className={`mt-4 transition ${
-                    isActive ? "text-violet dark:text-lila" : "text-night/30 hover:text-night/60 dark:text-white/30"
-                  }`}
-                >
-                  <PinIcon active={isActive} />
-                </button>
-              </div>
-            );
-          })}
-        </div>
-
-        {/* harita — kart genişliğinde, responsive, keskin köşe çerçevesiz gölge */}
-        <div className="mt-6 w-full shadow-[0_4px_24px_rgba(43,38,59,0.10)] dark:shadow-[0_4px_24px_rgba(0,0,0,0.35)]">
-          <iframe
-            key={`${current.lat}-${current.lng}`}
-            title={`${current.name} harita`}
-            src={`https://maps.google.com/maps?q=${current.lat},${current.lng}&z=14&output=embed`}
-            className="h-[380px] w-full border-0 grayscale transition duration-500 hover:grayscale-0 md:h-[480px]"
-            loading="lazy"
-          />
-        </div>
-
-        {/* Teklif Formu — harita genişliğinde, köşeler keskin, kontrast çerçeve + zıt gölge */}
+        {/* Görüşme Formu — sayfanın başında */}
         <Reveal direction="up">
           <form
             onSubmit={(e) => e.preventDefault()}
-            className="mt-10 border-2 border-[#2b263b] bg-white p-6 shadow-[0_24px_64px_rgba(43,38,59,0.22)] dark:border-[#f4f8fa] dark:bg-[#1E1B2E] dark:shadow-[0_24px_64px_rgba(255,255,255,0.12)] md:p-8"
+            className="mt-8 border-2 border-[#2b263b] bg-white p-6 shadow-[0_24px_64px_rgba(43,38,59,0.22)] dark:border-[#f4f8fa] dark:bg-[#1E1B2E] dark:shadow-[0_24px_64px_rgba(255,255,255,0.12)] md:p-8"
           >
             <div className="hidden grid-cols-2 gap-6 md:grid">
               <p className="text-lg font-extrabold text-night dark:text-white">Görüşmeye Başlayalım</p>
@@ -408,6 +342,72 @@ export default function Page() {
 
           </form>
         </Reveal>
+
+        {/* ofis kartları + altlarında ortalı konum pinleri */}
+        <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {offices.map((o, i) => {
+            const Icon = icons[o.icon];
+            const isActive = i === active;
+            return (
+              <div key={o.name} className="flex h-full flex-col items-center">
+                <Reveal direction="up" delay={i * 0.08} className="h-full w-full">
+                  <button
+                    type="button"
+                    onClick={() => setActive(i)}
+                    className={`flex h-full w-full flex-col items-center bg-white p-6 text-center shadow-[0_4px_24px_rgba(43,38,59,0.10)] dark:bg-white/[0.06] dark:shadow-[0_4px_24px_rgba(0,0,0,0.35)] transition hover:-translate-y-1 hover:shadow-[0_8px_32px_rgba(43,38,59,0.16)] dark:hover:shadow-[0_8px_32px_rgba(0,0,0,0.45)] ${
+                      isActive ? "ring-2 ring-violet dark:ring-lila" : ""
+                    }`}
+                  >
+                    <span className="text-night dark:text-white">
+                      <Icon />
+                    </span>
+                    <p className="mt-4 text-base font-extrabold">{o.name}</p>
+                    {o.addr.map((line) => (
+                      <p key={line} className="mt-1 text-xs leading-5 text-night/70 dark:text-white/60">
+                        {line}
+                      </p>
+                    ))}
+                    <a
+                      href={`mailto:${EMAIL}`}
+                      onClick={(e) => e.stopPropagation()}
+                      className="mt-2 text-xs text-night/70 transition hover:text-violet dark:text-white/60 dark:hover:text-lila"
+                    >
+                      {EMAIL}
+                    </a>
+                    <a
+                      href={o.telHref}
+                      onClick={(e) => e.stopPropagation()}
+                      className="mt-1 text-xs font-extrabold transition hover:text-violet dark:hover:text-lila"
+                    >
+                      {o.tel}
+                    </a>
+                  </button>
+                </Reveal>
+                <button
+                  type="button"
+                  onClick={() => setActive(i)}
+                  aria-label={`${o.name} konumunu göster`}
+                  className={`mt-4 transition ${
+                    isActive ? "text-violet dark:text-lila" : "text-night/30 hover:text-night/60 dark:text-white/30"
+                  }`}
+                >
+                  <PinIcon active={isActive} />
+                </button>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* harita — kart genişliğinde, responsive, keskin köşe çerçevesiz gölge */}
+        <div className="mt-6 w-full shadow-[0_4px_24px_rgba(43,38,59,0.10)] dark:shadow-[0_4px_24px_rgba(0,0,0,0.35)]">
+          <iframe
+            key={`${current.lat}-${current.lng}`}
+            title={`${current.name} harita`}
+            src={`https://maps.google.com/maps?q=${current.lat},${current.lng}&z=14&output=embed`}
+            className="h-[380px] w-full border-0 grayscale transition duration-500 hover:grayscale-0 md:h-[480px]"
+            loading="lazy"
+          />
+        </div>
       </div>
     </div>
   );

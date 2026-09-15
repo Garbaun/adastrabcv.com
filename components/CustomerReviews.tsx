@@ -157,8 +157,6 @@ export default function CustomerReviews() {
               </div>
             </div>
           </div>
-          {/* mobilde ortala hissi */}
-          <p className="mt-3 hidden text-center text-xs font-semibold tracking-wide text-white/70 md:block">Üzerine gelince durur · Ok ile yön değiştir</p>
         </div>
       </div>
     </section>

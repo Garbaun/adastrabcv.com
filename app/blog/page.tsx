@@ -217,14 +217,19 @@ export default function Page() {
 
   return (
     <div className="w-full bg-ice dark:bg-night">
-      {/* HERO 1920x600 — diğer sayfalarla aynı */}
-      <section className="w-full max-w-[1920px] mx-auto h-[420px] md:h-[600px] flex items-center justify-center bg-gradient-to-br from-violet via-lila to-baby dark:from-night dark:via-violet/30 dark:to-night relative overflow-hidden">
-        <div className="absolute inset-0 opacity-20" style={{ backgroundImage: "radial-gradient(circle at 2px 2px, #2B263B 1px, transparent 0)", backgroundSize: "24px 24px" }} />
-        <div className="relative text-center px-5">
-          <p className="text-xs font-extrabold tracking-[0.25em] text-white/80">1920×600 — HERO</p>
-          <h1 className="mt-3 text-4xl md:text-6xl font-extrabold tracking-tight text-white">Blog</h1>
-          <p className="mt-3 text-sm md:text-base font-semibold text-white/80">200 içerik — geriye doğru tarihlenmiş, konuya göre yazarlı</p>
-          <p className="mt-2 inline-block rounded-full bg-white/20 px-4 py-1 text-xs font-bold text-white backdrop-blur">Görsel sonra eklenecek — 1920×600</p>
+      {/* HERO 1920x600 — blog-hero.webp */}
+      <section className="relative w-full max-w-[1920px] mx-auto h-[420px] md:h-[600px] overflow-hidden">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/hero-image/blog-hero.webp" alt="Blog hero" className="absolute inset-0 h-full w-full object-cover" draggable={false} />
+        <div className="absolute inset-0 bg-night/35" />
+        <div className="relative flex h-full items-center px-5">
+          <div className="mx-auto flex w-full max-w-7xl items-center">
+            <h1 className="text-left text-[40px] font-extrabold leading-none tracking-tight text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.35)] md:text-[56px] lg:text-[64px]">
+              <span className="font-extrabold">Blog</span>
+              <br />
+              <span className="font-light">Yazılarımız</span>
+            </h1>
+          </div>
         </div>
       </section>
 
@@ -247,9 +252,6 @@ export default function Page() {
               </button>
             )}
           </div>
-          <p className="mt-3 text-xs font-semibold text-night/60 dark:text-white/60">
-            {filtered.length} içerik bulundu · {posts.length} gösteriliyor · Tarihler 15.09.2026&apos;dan geriye doğru
-          </p>
         </div>
       </section>
 
