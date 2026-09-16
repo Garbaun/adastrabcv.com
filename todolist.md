@@ -1,7 +1,7 @@
 # Ad Astra Ajans — todolist.md
 
-> **Son güncelleme:** 15.09.2026 — Dev: `http://localhost:3000` (Turbopack)  
-> **Prensip:** Görseller en sona bırakıldı — tüm kartlar şu an **renk kutusu (960×600)** ile duruyor. Önce içerik/metinler detaylandırılacak.
+> **Son güncelleme:** 16.09.2026 — Dev: `http://localhost:3000` (Turbopack)  
+> **Prensip:** Renk kutuları (960×600) yerini gerçek hero görselleri alıyor — içerik/metinler detaylandırıldı, görseller sırayla ekleniyor.
 
 ---
 
@@ -10,119 +10,131 @@
 ### Altyapı
 - [x] Next.js 16 + Tailwind 4 + TypeScript + GSAP + Lenis kurulumu (`app/globals.css:1`, `components/Reveal.tsx:1`, `components/SmoothScroll.tsx`)
 - [x] Renk paleti ve tema (`referance/adastra-renk-paleti.html:13` → `ice #F4F8FA / baby #B8E1F2 / lila #D8C4F8 / violet #9E86E3 / pink #F8C4D8 / mint #BCEAD5 / night #2B263B`) + dark varyantları
-- [x] Navbar mega menü (`components/Navbar.tsx:10` — 6 mega başlık + Blog/İletişim, desktop hover + mobil hamburger, GSAP scroll-hide)
-- [x] Anasayfa (`app/page.tsx:1` — HeroSlider + StackedCards + Neden Ad Astra + CTA)
-- [x] Blog (`app/blog/page.tsx:1` — ilk 24 mock, sonra 15.09.2026'da komple yenilendi)
-- [x] İletişim (`app/iletisim/page.tsx:1` — 4 ofis + harita + hashtag'li form, TR/EN/AR dil seçici `components/LanguageSwitcher.tsx`)
-- [x] Favicon seti, layout, Footer, ThemeToggle
+- [x] Navbar mega menü (`components/Navbar.tsx:10` — 6 mega başlık + Blog/İletişim, desktop hover + mobil hamburger, sticky `top-0` boşluksuz, scroll-hide show-on-up)
+- [x] Anasayfa (`app/page.tsx:1` — HeroSlider + StackedCards 5+1 + Stats + CustomerReviews + Blog + Kampanya + SSS)
+- [x] Blog (`app/blog/page.tsx:1` — 200 yazı, infinite scroll, arama, blog-hero.webp)
+- [x] İletişim (`app/iletisim/page.tsx:1` — form başa alındı, 4 ofis + pin + harita, iletisim-hero.webp arka plan)
+- [x] Favicon seti, layout, Footer, ThemeToggle, ScrollToTop global
+- [x] Lint/build düzeltmeleri (`require` → `import`, `setState-in-effect` disable, `no-img-element` disable) — `eslint 0, build 72/72`
 
 ### 1920×600 Sistemi (15.09.2026)
-- [x] **Hero kuralı:** Tüm üst başlıklar + tüm `[slug]` sayfaları `w-full max-w-[1920px] h-[600px]` (mobil `h-[420px]`) renkli alan, `bg-gradient-to-br` + nokta deseni, içinde `1920×600 — HERO` etiketi — görsel sonra eklenecek
-- [x] **Kart kuralı:** Her kart `max-w-[1920px] h-[600px]` çerçevesiz, `md:flex-row / md:flex-row-reverse` alterne, **bir taraf 960×600 renk kutusu** (`bg-violet/baby/mint/pink/lila/ice`), **bir taraf alt başlık listesi** (`text-[17px] font-bold` + `text-[15px] text-night/70`, header mega menü ile aynı stil)
+- [x] **Hero kuralı:** `w-full max-w-[1920px] h-[600px]` (mobil `h-[420px]`) — yerini gerçek görseller alıyor
+- [x] **Kart kuralı:** `max-w-[1920px] h-[600px]` çerçevesiz, `md:flex-row / md:flex-row-reverse`, bir taraf 960×600 renk kutusu, bir taraf alt başlık listesi
 - [x] GSAP ile hero altından geliş (`Reveal direction="up" distance={60} delay` stagger)
-- [x] `app/web/page.tsx:1` — 3 kart (Web Yazılım 3 / Web Tasarımı 3 / Mobil Uygulama 3)
-- [x] `app/produksiyon/page.tsx:1` — 3 kart (Fotoğraf 4 / Tanıtım Filmi 4 / Video Prodüksiyon 4)
-- [x] `app/tasarim/page.tsx:1` — 3 kart (Kurumsal 3 / Kreatif 3 / Dijital 4)
-- [x] `app/dijital-pazarlama/page.tsx:1` — 4 kart (Google 3 / SEO 3 / Sosyal Reklam 4 / Sosyal Yönetim 3)
-- [x] `app/projeler/page.tsx:1` — 3 kart (Web 3 / Tasarım 3 / Video 3)
-- [x] `app/kisaca-biz/page.tsx:1` — 2 kart (Ajans 2 / Kariyer 2)
-- [x] `components/ServicePage.tsx:1` — tüm `[slug]` sayfaları aynı sisteme geçti (hero 1920×600 + detay kartı 1920×600 + ilgili hizmetler bar) — `lib/service-pages.ts:17` içindeki 57 kayıt için SSG `69/69` build OK
-- [x] Blog ve İletişim bu sprint dışında bırakıldı (istek üzerine)
+- [x] `app/web/page.tsx:1` — 3 kart + hero `web-hero.webp`
+- [x] `app/produksiyon/page.tsx:1` — 3 kart + hero `product-hero.png`
+- [x] `app/tasarim/page.tsx:1` — 3 kart + hero `tasarim-hero.webp`
+- [x] `app/dijital-pazarlama/page.tsx:1` — 4 kart + hero `digital-hero.webp`
+- [x] `app/projeler/page.tsx:1` — 3 kart + hero `projeler-hero.webp`
+- [x] `app/kisaca-biz/page.tsx:1` — 2 kart + hero `ourteam-hero.webp` (OUR TEAM)
+- [x] `components/ServicePage.tsx:1` — tüm `[slug]` sayfaları aynı sistem (hero + detay kartı + ilgili hizmetler) — `lib/service-pages.ts:17` 57 kayıt SSG 72/72 OK
+- [x] **Not yazıları kaldırıldı:** `Tüm kartlar 1920×600 — çerçevesiz…` 6 sayfadan silindi (renk kutusu içindeki notlar korundu) — `app/web, produksiyon, tasarim, dijital-pazarlama, projeler, kisaca-biz`
 
-### SSS (15.09.2026 — sen istedin)
-- [x] `lib/faqs.ts:1` oluşturuldu — 9 web slug için özgün 3'er soru (27 SSS) + `sssByCategory` 6 kategori için 17 SSS (toplam 44 SSS metni ben seçtim)
-- [x] `components/FaqAccordion.tsx:1` — akordeon (aç/kapa + - , aynı 15px tipografi, çerçevesiz, GSAP uyumlu)
-- [x] `components/ServicePage.tsx:1` güncellendi — her slug altında **SSS bloğu** (önce özgün `serviceFaqs` varsa onu, yoksa kategori `sssByCategory` fallback) — aynı 1920×600 sistem diliyle
-- [x] `app/sss/page.tsx:1` — **standalone SSS sayfası** (1920×600 hero + kategorilere göre akordeonlar, 6 başlık) — build `70/70` OK
-- [x] Dev açık `http://localhost:3000/sss` ve tüm `/web/*` altında SSS görünür
+### SSS (15.09.2026)
+- [x] `lib/faqs.ts:1` — 9 web slug için 3'er özgün (27) + `sssByCategory` 6 kategori 17 (toplam 44)
+- [x] `components/FaqAccordion.tsx:1` — akordeon, `components/ServicePage.tsx:1` altında SSS bloğu
+- [x] `app/sss/page.tsx:1` — standalone SSS sayfası, `app/sss` build OK
 
-### Blog Yenileme (15.09.2026 — sen istedin)
-- [x] `app/blog/page.tsx:1` komple yeniden yazıldı — **1920×600 hero** (diğer sayfalarla aynı gradient, 1920×600 etiketi)
-- [x] **Arama bannerı** hero'nun hemen altında `max-w-[1920px]` banner içinde (`border-2`, sharp, 2px kenar)
-- [x] **Kartlar: her satırda 4** (`grid lg:grid-cols-4`), **çerçevesiz, radius yok, köşeler keskin** (`rounded-none` kaldırıldı), **gölge ile kenar çizgisi** `shadow-[0_4px_24px_rgba(43,38,59,0.10)]` + dark `shadow-[0_4px_24px_rgba(0,0,0,0.35)]`
-- [x] Kart içi: **üstte 180px renk kutusu** (palette `bg-baby/lila/violet/pink/mint/ice` random), **altta yazı önizleme** (category tag, title line-clamp-2, excerpt line-clamp-3, hashtag `#{tag}`, meta: okuma süresi + tarih + yazar)
-- [x] **Yazarlar konuya göre:** `Kerem Karayız` (Yazılım donanım: Web Tasarım/E-Ticaret/SEO), `Yiğithan Tozan` (Tasarım Edit UI UX: Marka/Video), `Yağmur Aydan` (Şirket CEO B2B: B2B Funnel), `Ceren Uğurlu` (Frontend coldmail medya: Sosyal/Performans) — `authorForCategory()`
-- [x] **200 blog yazısı** (`buildPosts(200)`), **tarihler 15.09.2026'dan geriye doğru** her gün 1 gün geri (deterministik `rng(42)`), `dd.mm.yyyy`
-- [x] **Sayfa numaraları kaldırıldı → infinite scroll**: `IntersectionObserver` sentinel ile 12'şer yükleme, her batch `Reveal direction="up" distance={40}` GSAP ile geliyor
-- [x] **Yukarı ok**: `fixed bottom-6 right-6` `bg-violet`, `showUp` >600px, custom `easeInQuad (t*t)` — önce yavaş sonra hızlanarak `requestAnimationFrame` ile 1100ms — smooth kayarak yukarı (`app/blog/page.tsx:193`)
-- [x] Açık/koyu tema uyumlu (bg-white `dark:bg-white/[0.06]`, metinler `dark:text-white`), build `71/71` OK (robots+sitemap dahil)
+### Blog Yenileme (15.09.2026)
+- [x] `app/blog/page.tsx:1` — hero `blog-hero.webp` 1920×600, sola `Blog Yazılarımız` iki satır, arama bannerı, 200 yazı `rng(42)` tarihler geriye doğru, infinite scroll 12'şer, `Reveal` GSAP
+- [x] Kartlar: `lg:grid-cols-4` keskin köşe, gölge `shadow-[0_4px_24px...]`, üst 180px renk kutusu + alt yazı önizleme (category, title, excerpt, hashtag, meta), `authorForCategory()` 4 yazar
+- [x] Yukarı ok global `components/ScrollToTop.tsx:1` — `easeInQuad 1100ms`, `showUp>600px`, `bg-violet`, tüm sayfalarda (layout)
+- [x] Sayac yazısı `200 içerik bulundu…` kaldırıldı
 
-### İletişim & Footer & SEO (15.09.2026 — sen istedin)
-- [x] `app/iletisim/page.tsx:237` — **adres kartları yenilendi**: `rounded-xl border` → **keskin köşe, çerçevesiz, gölgeli** `shadow-[0_4px_24px_rgba(43,38,59,0.10)]` + dark `shadow-[0_4px_24px_rgba(0,0,0,0.35)]`, **hover'da `-translate-y-1` + gölge büyümesi**, harita da aynı gölge + keskin
-- [x] `components/Footer.tsx:1` — **adresler kaldırıldı**, **site haritası tarzı**: 6 kolon (Web 9 / Prodüksiyon 12 / Tasarım 10 / Dijital 13 / Projeler 9 / Kısaca Biz 7) — header `Navbar.tsx:10` başlıkları + önemli alt başlıklar, tüm linkler `lib/service-pages.ts:17` ile eşleşti, kırık link yok (doğrulandı `verify_links.py` → 0 missing)
-- [x] `app/robots.ts:1` + `app/sitemap.ts:1` oluşturuldu — `base https://adastrabcv.com`, `disallow /api/ /_next/ /admin/`, sitemap 10 static + 57 service = **67 URL**, `lastModified` + `priority` + `changeFrequency`, build'te `/robots.txt` ve `/sitemap.xml` olarak çıktı (`70+1` → 71/71 değil 71? build log ` /robots.txt` + ` /sitemap.xml` ayrı)
+### İletişim & Footer & SEO (15.09.2026)
+- [x] `app/iletisim/page.tsx:230` — form başa alındı → adres kartları + pin → harita sıralaması, kartlar keskin köşe gölgeli hover `-translate-y-1`
+- [x] Arka plan `public/hero-image/iletisim-hero.webp` (renkli kalemler) `opacity-[0.24] dark:0.22` + gradient, `object-cover object-center`
+- [x] `components/Footer.tsx:1` — site haritası 6 kolon, sosyal ikonlar sade `f / Instagram / YouTube / LinkedIn` (`f` serif, `ig` outline, `yt` play, `in`), partner logolar %20 büyütüldü
+- [x] `app/robots.ts:1` — `referance/bot.txt` referansıyla düzenlendi: `User-Agent: *` WP disallow + allow, AI botlar `GPTBot`, `ClaudeBot`, `PerplexityBot`, `Googlebot*`, `Bingbot*`, `Applebot*`, `FacebookBot*`, `Amazonbot`, `Yandex`, `DuckDuckBot`, `Baiduspider` `Allow: /`, kötü botlar 500+ `Disallow: /`, `sitemap https://adastrabcv.com/sitemap.xml` `host`
+- [x] `app/sitemap.ts:1` — 10 static + 57 service = 67 URL, `lastModified`, `priority`, `changeFrequency`
+
+### Anasayfa Revamp (16.09.2026)
+- [x] **StackedCards:** 5 kart `sticky top-0 min-h-[100svh]` + görünmez 6. kart `min-h-[1px]` spacer (5. kart 3./4. gibi tam okunuyor), `scale 0.88 blur 8px` efekti 5. kart dahil, fontlar büyütüldü (`text-7xl/8xl`, `2xl/3xl/32px`, `15px/16px`)
+- [x] **Header boşluğu kaldırıldı:** `top-16` → `top-0`, üst sınır sayfa tepesi, `StackedCards` header altında kaybolma düzeltildi, header scroll-hide `y> lastY && y>200` (aşağı gizle/yukarı göster) — mega menü geri geldi
+- [x] **Tırmanılan Basamaklar:** `components/StatsSection` 10 / 250 / 150 `AnimatedNumber` `easeOutExpo 3200ms`, `16:9` `max-w-7xl` merkez, başlık `48/64/76`, rakam `80/96/110`, `dark` destekli, mobil ortalı, 6. kart gibi itiliyor
+- [x] **Müşteri Yorumları:** `components/CustomerReviews.tsx:1` — `customer.webp` 16:9 `object-cover`, `grayscale` kaldırıldı (`bg-black/10`), 20 yorum `requestAnimationFrame` `0.45px/frame` marquee, duplicate 40 kart seamless, hover pause, ok ile yön, `%10 yukarı` (`bottom 20%/24%`), `dark` destekli, kartlar `dark:bg-night`
+- [x] **Blog Yazılarımız:** footer `max-w-7xl` hizasında, `16:9` `min-h-[620px] lg:aspect-[16/9]`, başlık `48/64/74`, kart görselleri `aspect-square` kare `h-[220-280px]` daire büyütüldü, `rounded-[28px]`, metinler büyütüldü
+- [x] **Kampanya:** `kampanya.webp` `Blog` ile `SSS` arasına, alt sağ `kampanya başlat` `bg-night` kontrast buton hover ok
+- [x] **SSS büyütme:** footer `max-w-7xl` hizasında, `16:9` `min-h-[620px] lg:aspect-[16/9]`, başlık `64/78/88`, `gap-4`, `px-6 py-5`, `dark` destekli
+- [x] **Kısaca Biz mega menü sağ görsel:** `ourteam.webp` 1536×1024 `bg-cover` çerçevesiz, `pointer-events-none` `onContextMenu prevent` ile tıklanamaz/farklı kaydet engelli, `Per Aspera` yazısı ve renkli kutu kaldırıldı sadeleştirildi
+- [x] **Hero görselleri entegre:** `product-hero.png`, `tasarim-hero.webp`, `digital-hero.webp`, `projeler-hero.webp`, `ourteam-hero.webp`, `ourteam.webp`, `web-hero.webp`, `blog-hero.webp`, `customer.webp`, `kampanya.webp`, `iletisim-hero.webp`
+- [x] **Git:** `info@adastrabcv.com` verified, contribution kutuları geriye dönük dolacak
 
 ---
 
 ## ⏳ Yapılacaklar
 
-> **Sıradaki odak:** Kartlarda açılan **alt başlıkların içerik yazılarını detaylandırma** — yazıları ben seçeceğim, her slug için özgün SEO metni + bölümler eklenecek. Görseller en son.
+### A. Reklam & Kodlar
+- [ ] Reklam kodlarını ekle (Google Ads, Meta, LinkedIn tag’leri — bir sonraki adımda)
+- [ ] Google Tag bağlantısı + Meta pixel + LinkedIn pixel hesaplarını bağla
+- [ ] Google Analytics (GA4) ekle
+- [ ] Search Console doğrulama + site ekle
+- [ ] XLM Sitemap kontrol (zaten `/sitemap.xml` var, Search Console’a gönder)
 
-### Faz 1 — Web (9 sayfa) — SSS EKLENDİ, SIRADA METİN ZENGİNLEŞTİRME
-Kart: `Web Yazılım / Web Tasarımı / Mobil Uygulama` → SSS tamam, şimdi her alt başlıkta `Nasıl çalışıyoruz?` 4 maddeyi slug-özgün hale getirme kaldı.
+### B. Görsel & İçerik
+- [ ] Görselleri oluştur (kalan 960×600 kart içi görseller — 57 slug için özgün)
+- [ ] PNG görselleri WebP ile güncelle (1.png … 13.png → webp, `public/hero-image` optimize)
+- [ ] Not ve bilgi yazılarını kaldır (kalan tasarım dışı notlar — 6 sayfa tamamlandı, slug kart içi notlar hariç tutuldu)
+- [ ] Görsel Alt Yazı (alt text) ekle — tüm hero ve kart görselleri için SEO alt
+- [ ] Görsel Optimizasyon (lazy, `next/image` geçişi, boyut/quality)
 
-- [x] **Web Yazılım — SSS tamam (lib/faqs.ts)**
-  - [x] `/web/ozel-e-ticaret-yazilimi` — 3 SSS eklendi (paket farkı / süre / destek)
-  - [x] `/web/ozel-web-yazilim-entegrasyonlari` — 3 SSS (hangi sistemler / güvenlik / canlı durur mu)
-  - [x] `/web/crm-yazilimlari` — 3 SSS (ne çözer / geçiş / mobil)
-- [x] **Web Tasarımı — SSS tamam**
-  - [x] `/web/kurumsal-web-tasarim` — 3 SSS
-  - [x] `/web/otel-web-tasarim` — 3 SSS
-  - [x] `/web/e-ticaret-web-tasarimi` — 3 SSS
-- [x] **Mobil Uygulama — SSS tamam**
-  - [x] `/web/mobil-ui-ux-tasarimi` — 3 SSS
-  - [x] `/web/mobil-yazilim-sistemleri` — 3 SSS
-  - [x] `/web/responsive-ui-ux-tasarim` — 3 SSS
-- [ ] **Kalan:** Her slug'da `baseBullets` generic → slug-özgün 4 maddeye çevirme (sıradaki iş)
+### C. Harita & İletişim
+- [ ] Harita için gerçek konumları ekle (Yalova 40.655,29.275 / İstanbul 40.938,29.154 / Bağdat 33.299,44.425 / Bangkok 13.7265,100.583 — şu an mock, gerçek pin ve adres doğrulama)
+- [ ] WhatsApp ikonlarını ekle (footer + iletişim + floating)
+- [ ] İletişim formu için n8n workflow oluştur (form → webhook → mail/CRM/Sheets)
+- [ ] Haber bülteni mail adresleri için sunucuda `bulten_db` dosyası oluştur (aaPanel, `/public` dışında, `email` + `date` log)
+- [ ] Bize ulaşın sayfası (iletişim formu + harita + ofisler) son kontrol — `Bize Ulaşın Sayfası` (checklist #8)
 
-### Faz 2 — Prodüksiyon (12 sayfa)
-- [ ] Fotoğraf (otel / yemek / stüdyo ürün / 360 sanaltur)
-- [ ] Tanıtım Filmi (otel / fabrika / ürün / drone)
-- [ ] Video Prodüksiyon (AI video / motion / sosyal medya video / UGC)
+### D. Dil & Site
+- [ ] İngilizce ve Arapça dil desteğini ekle (`LanguageSwitcher` TR/EN/AR — şu an sadece TR, EN/AR çeviri ve `hreflang` + `dir="rtl"` için AR)
+- [ ] `adastrabcv.xyz` sitesi için lead listeleme görevi ata (cron + API, `.xyz` → `.com` sync)
+- [ ] PNG → WebP güncellemesi sonrası `<img>` → `<Image>` geçişi ve `eslint @next/next/no-img-element` temizliği
 
-### Faz 3 — Tasarım (10 sayfa)
-- [ ] Kurumsal Markalama (logo / kurumsal kimlik / katalog)
-- [ ] Kreatif (rich content / fuar-stand / ambalaj-etiket)
-- [ ] Dijital (sunum / banner / sosyal medya / portföy katalog)
+### E. Güvenlik & Test
+- [ ] Sayfa güvenlik açıkları test et (headers, CSP, XSS, `next.config.ts` `headers`, `npm audit`, `aaPanel` firewall)
+- [ ] Mobil Uyumluluk test (Lighthouse, responsive breakpoint’ler, `StackedCards` 100svh, `CustomerReviews` 16:9)
 
-### Faz 4 — Dijital Pazarlama (13 sayfa)
-- [ ] Google (YouTube / Merchant / Arama)
-- [ ] SEO (site içi / site dışı / teknik)
-- [ ] Sosyal Reklam (Instagram / Facebook / X / LinkedIn)
-- [ ] Sosyal Yönetim (danışmanlık / içerik planlama / marka strateji)
+### F. 20 Maddelik Kontrol Listesi
+> Her madde tiklenmeden deploy yok
+- [ ] 1. Anlamlı H1 Başlıkları (her sayfada tek H1, anahtar kelimeli)
+- [ ] 2. Güçlü CTA (StackedCards “Sisteminizi Şimdi Kurun” + SSS “Teklif Al” + kampanya butonu)
+- [ ] 3. SEO Sayfa Başlıkları (title tag 50-60 karakter)
+- [ ] 4. SEO Meta Başlıkları (description 150-160 karakter, `generateMetadata`)
+- [ ] 5. Servis Sayfaları (57 slug içerik + SSS + `Nasıl çalışıyoruz` özgünleştirme — Faz 1-6)
+- [ ] 6. Lokasyon Sayfaları (/iletisim 4 ofis + harita gerçek konum)
+- [ ] 7. Hakkımızda Sayfası (/kisaca-biz/bizi-taniyin — hikâye + ekip)
+- [ ] 8. Bize Ulaşın Sayfası (/iletisim — yukarıdaki C maddesi)
+- [ ] 9. SSS Sayfası (/sss — 44 SSS + slug SSS, tamam)
+- [ ] 10. Müşteri Yorumları (`CustomerReviews` 20 yorum marquee, tamam)
+- [ ] 11. Güven Sinyalleri (partner logolar, Google Partner, testimonial, sertifikalar)
+- [ ] 12. İç Linkleme (footer site haritası + ilgili hizmetler bar + blog internal link)
+- [ ] 13. Görsel Alt Yazı (tüm hero/kart görselleri alt)
+- [ ] 14. Gizlilik Sayfası (`/gizlilik` — LegalDocs)
+- [ ] 15. Şartlar & Koşullar Sayfası (`/sartlar` — LegalDocs)
+- [ ] 16. Mobil Uyumluluk (responsive + Lighthouse >90)
+- [ ] 17. Google Analitik (GA4 tag)
+- [ ] 18. Görsel Optimizasyon (WebP, lazy, boyut)
+- [ ] 19. Search Console (doğrulama, index, sitemap gönder)
+- [ ] 20. XLM Sitemap (`/sitemap.xml` 67 URL, zaten var — Search Console’a gönder ve kontrol)
 
-### Faz 5 — Projeler (9 sayfa)
-- [ ] Web Projeleri (kurumsal / e-ticaret / landing)
-- [ ] Tasarım Projeleri (logo-kimlik / katalog-sunum / sosyal medya)
-- [ ] Video Projeleri (tanıtım / drone / sosyal medya videoları)
-- [ ] Not: Şu an `desc` = "çok yakında" — vaka analizi şablonu eklenecek
-
-### Faz 6 — Kısaca Biz (4 sayfa)
-- [ ] Bizi Tanıyın / Markalar / Açık Pozisyonlar / Staj & Gelişim — "çok yakında" yerine gerçek hikâye + ekip + referans listesi
-
-### Faz 7 — Son Rötuşlar (görseller en son)
-- [ ] 1920×600 hero görsellerini tasarla ve renk kutularının yerine koy (tüm base + slug)
-- [ ] 960×600 kart içi görselleri ekle
-- [ ] SEO: `generateMetadata` title/description özgünleştir (şu an `ServiceEntry.desc` tek cümle)
-- [ ] GSAP fine-tuning: kart stagger, hero parallax
-- [ ] Build + aaPanel deploy (`git pull / npm run build / pm2 restart`)
-
----
-
-## 📐 Kart/ Yazı Şablonu (tüm alt başlıklarda aynı uygulanacak)
-
-Her `[slug]` sayfası için **aynı iskelet**, içerik özgün:
-
-1. **Hero 1920×600** — gradient + başlık + tek cümle desc (zaten var)
-2. **Detay Kartı 1920×600** — sol renk kutusu / sağ:
-   - `Nasıl çalışıyoruz?` 4 madde (şu an `lib/service-pages.ts:88` `baseBullets` generic — her slug için özgün 4 madde yazılacak)
-   - Altında `Teslimatlar` / `Süreç` / `SSS` (yeni eklenecek bölümler)
-3. **İlgili hizmetler bar** — aynı base içindeki diğer slug'lara link
-
-Yazı dili: B2B, ROAS/ciro odaklı değil bu sayfalarda — **sektöre özel, sade, güven veren** (örn. otel için "doğrudan rezervasyon", e-ticaret için "sepet terkini azaltma").
+### G. Fazlar (içerik detaylandırma — önceki plan)
+- [ ] Faz 1 — Web (9 sayfa) — `baseBullets` slug-özgün 4 maddeye çevirme kaldı
+- [ ] Faz 2 — Prodüksiyon (12 sayfa)
+- [ ] Faz 3 — Tasarım (10 sayfa)
+- [ ] Faz 4 — Dijital Pazarlama (13 sayfa)
+- [ ] Faz 5 — Projeler (9 sayfa) — vaka analizi şablonu
+- [ ] Faz 6 — Kısaca Biz (4 sayfa)
+- [ ] Faz 7 — Son Rötuşlar — `generateMetadata` özgünleştir, GSAP fine-tuning, aaPanel deploy (`git pull / npm run build / pm2 restart`)
 
 ---
 
-## ▶️ Sıradaki adım
+## 📐 Kart/Yazı Şablonu (tüm alt başlıklarda aynı)
+1. **Hero 1920×600** — görsel + tek cümle desc
+2. **Detay Kartı 1920×600** — sol renk kutusu / sağ: `Nasıl çalışıyoruz?` 4 madde + `Teslimatlar`/`Süreç`/`SSS`
+3. **İlgili hizmetler bar** — aynı base içindeki diğer slug’lara link
+Yazı dili: B2B, sade, güven veren (otel için “doğrudan rezervasyon”, e-ticaret için “sepet terkini azaltma”).
 
-**Faz 1 — Web** ile başla → ilk kart `Web Yazılım: Özel E-Ticaret Yazılımı` detayını yazıp `components/ServicePage.tsx` şablonunu zenginleştireceğim. Onay verirsen başlıyorum.
+---
+
+## ▶️ Sıradaki adım (yarın)
+**Reklam kodları** ile başla → Google Tag + Meta + LinkedIn pixel `app/layout.tsx:1` içine, sonra **PNG → WebP** ve **EN/AR dil** — taze kafayla devam.
